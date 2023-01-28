@@ -1,0 +1,48 @@
+name: generic_cmake_build
+description: 'Build on particular system'
+
+inputs:
+  shell_type:
+    description: 'Shell type'
+    required: true
+    default: 'bash'
+  project_dir:
+    description: 'Project directory with sources'
+    required: true
+    default: ${{github.workspace}}
+  build_type:
+    description: 'Build type'
+    required: true
+    default: 'Debug'
+  cmake_generator:
+    description: 'Makefile generator used by CMake'
+    required: true
+    default: 'Unix Makefiles'
+  parallel:
+    description: 'Number of threads for parallel run'
+    required: true
+    default:  1
+  tests_flag:
+    description: 'Run tests flag'
+    required: true
+    default:  true
+
+runs:
+  using: "composite"
+  steps:
+
+    # Needs first: actions/checkout@v3
+
+    - name: Configure CMake
+      run: cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
+      shell: ${{ inputs.shell_type }}
+
+    - name: Build
+      run: cmake --build ${{inputs.project_dir}}/build -j ${{ inputs.parallel }} --config ${{ inputs.build_type }}
+      shell: ${{ inputs.shell_type }}
+
+    - name: Test
+      if: ${{ inputs.tests_flag == 'true' }}
+      working-directory: ${{inputs.project_dir}}/build
+      run: ctest -C ${{ inputs.build_type }}
+      shell: ${{ inputs.shell_type }}

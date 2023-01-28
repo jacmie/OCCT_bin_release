@@ -1,0 +1,194 @@
+name: build-release
+
+run-name: Create Github Release
+
+on:
+  push:    
+    tags:
+      - v*
+    with:
+      branches:
+        - master
+
+#  workflow_dispatch:
+#    branches: 
+#      - master
+
+jobs:
+  release_binaries:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+
+          - os:                 ubuntu-latest
+            shell_type:         bash
+            cmake_generator:    "Unix Makefiles"
+            release_dir:        "/build"
+            ext:                ""
+            compress:           "tar -czvf"
+            compress_ext:       "UnixMake.tar.gz"
+
+          - os:                 macos-latest
+            shell_type:         bash
+            cmake_generator:    "Unix Makefiles"
+            release_dir:        "/build"
+            ext:                ""
+            compress:           "tar -czvf"
+            compress_ext:       "UnixMake.tar.gz"
+
+          - os:                 windows-latest
+            shell_type:         pwsh
+            cmake_generator:    "MinGW Makefiles"
+            release_dir:        "/build"
+            ext:                ".exe"
+            compress:           "7z a"
+            compress_ext:       "MinGW.zip"
+
+          - os:                 windows-latest
+            shell_type:         pwsh
+            cmake_generator:    "Visual Studio 17 2022"  
+            release_dir:        "/build/Release"
+            ext:                ".exe"
+            compress:           "7z a"
+            compress_ext:       "VS17.zip"
+
+    permissions:
+      contents: write
+  
+    steps:
+
+      - uses: actions/checkout@v3
+        #with:
+          #fetch-depth: 0 # get all tags (needed to get git log) may be time consuming 
+          #ref: master
+          ##ref: ${{ github.event.pull_request.head.ref }}
+
+      # MacOS
+      - name: Set MacOS
+        if: matrix.os == 'macos-latest'
+        run:  brew install tree
+
+      # MSYS
+      - name: Set MSYS
+        if: matrix.cmake_generator == 'MinGW Makefiles'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem:      MINGW64 # (default), Other - MSYS, UCRT64, CLANG64
+          path-type:    minimal # (default), Other - strict, inherit
+          release:      true
+         #update:       true
+          platform-check-severity: fatal
+          install: >-
+            tree
+            git
+            base-devel
+            mingw-w64-x86_64-toolchain
+
+      # Set MSVC
+      - name: Set MSVC 
+        if: matrix.cmake_generator == 'Visual Studio 17 2022'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86_64
+          vsversion: 17.0
+
+      # 3rd Party 
+      - name: Set catalogues structure for 3rd Party dependencies (Windows VS only) 
+        if: matrix.cmake_generator == 'Visual Studio 17 2022'
+        run: |
+          pwd
+          mkdir '${{github.workspace}}/dep/include'
+          mkdir '${{github.workspace}}/dep/lib'
+          mkdir '${{github.workspace}}/dep/bin'
+          tree  '${{github.workspace}}/dep' /f /a
+
+      # Freetype
+      - name: Freetype - Dowload & Build
+        uses: ./.github/actions/freetype
+        with:        
+          release: 2.12.1
+          cmake_generator: ${{ matrix.cmake_generator }}
+
+      # Tcl
+      - name: Tcl - Dowload & Build
+        uses: ./.github/actions/tcl
+        with:        
+          cmake_generator: ${{ matrix.cmake_generator }}
+
+      # Tk
+      - name: Tk - Dowload & Build
+        uses: ./.github/actions/tk
+        with:        
+          cmake_generator: ${{ matrix.cmake_generator }}
+
+      # 3rd Party dependencies
+      - name: 3rd Party - Unix
+        if: matrix.cmake_generator == 'Unix Makefiles'
+        run: |
+          echo '### include dir ###'
+          cd /usr/local/include/freetype2
+          pwd
+          ls -d */
+          ls -c -ltd -- *ft*
+          cd /usr/local/include
+          pwd
+          ls -d */
+          ls -c -ltd -- *tcl*
+          ls -c -ltd -- *tk*
+          echo '### lib dir ###'
+          cd /usr/local/lib
+          pwd
+          ls -d */
+          ls -c -ltd -- *freetype*
+          ls -c -ltd -- *tcl*
+          ls -c -ltd -- *tk*
+        shell: bash
+
+      - name: 3rd Party - MinGW
+        if: matrix.cmake_generator == 'MinGW Makefiles'
+        run: |
+          Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\include\freetype2'
+          Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\lib'
+#         tree 'D:\a\_temp\msys64\mingw64\include\freetype2' /f /a
+#         tree 'D:\a\_temp\msys64\mingw64\lib' /f /a
+        shell: pwsh
+
+      - name: 3rd Party - VS17
+        if: matrix.cmake_generator == 'Visual Studio 17 2022'
+        run: tree '${{github.workspace}}/dep' /f /a
+        shell: pwsh 
+
+      # Build Release
+      - name: Build Release
+        uses: ./.github/actions/generic_cmake_build
+        with:        
+          shell_type: pwsh #${{ matrix.shell_type }}
+          build_type: Release
+          cmake_generator: ${{ matrix.cmake_generator }}
+          parallel: 8
+          tests_flag: false
+
+      # Compress Artefacts
+      - name: Compress Artefacts
+        shell: bash
+        run: |
+          cd '${{github.workspace}}${{ matrix.release_dir }}'
+          ls
+          ${{ matrix.compress}} build_${{ matrix.os }}_${{ matrix.compress_ext}} HelloCMake${{ matrix.ext }}
+
+      # Log from Commits, from last version (needed tags indicating version starting with "v")
+      #- name: Get commits for release version log
+      #  run: git log $(git describe HEAD~ --match="v*" --tags --abbrev=0).. --pretty=format:'%as %s' > body.log
+  
+      # Create Github release with release note from file and binary asset attached
+      - name: Deploy Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          name: ${{ env.GITHUB_REF_NAME }}
+          tag: ${{ env.GITHUB_REF_NAME }}
+          artifacts: '${{github.workspace}}${{ matrix.release_dir }}/build_${{ matrix.os }}_${{ matrix.compress_ext}}'
+          #bodyFile: "body.log"
+          token: ${{ secrets.GITHUB_TOKEN }}
+

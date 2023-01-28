@@ -1,0 +1,80 @@
+name: build_tk
+description: 'Build Tk library'
+
+inputs:
+  cmake_generator:
+    description: 'Makefile generator used by CMake'
+    required: true
+    default: 'Unix Makefiles'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Tk - Unix - Build & Install
+      if: inputs.cmake_generator == 'Unix Makefiles'
+      run: |
+        echo '### download ###'
+        cd ~
+        git clone https://github.com/tcltk/tk.git
+        echo '### configure ###'
+        cd tk/unix/
+        ./configure --enable-64bit
+        echo '### compile ###'
+        make -j 8
+        echo '### install ###'
+        sudo make install
+        echo '### include dir ###'
+        cd /usr/local/include/
+        pwd
+        ls -d */
+        ls -c -ltd -- *tk*
+        echo '### lib dir ###'
+        cd /usr/local/lib
+        pwd
+        ls -d */
+        ls -c -ltd -- *tk*
+      shell: bash
+
+    - name: Tk - MinGW - Build
+      if: inputs.cmake_generator == 'MinGW Makefiles'
+      run: |
+        echo '### download ###'
+        cd ~
+        git clone https://github.com/tcltk/tk.git
+        echo '### configure ###'
+        cd tk/win/
+        ./configure --enable-64bit --disable-zipfs
+        echo '### compile ###'
+        make -j 8
+        echo '### install ###'
+        make install
+        echo '### include dir ###'
+        cd /mingw64/include/
+        pwd
+        ls -d */
+        ls -c -ltd -- *tk*
+        echo '### lib dir ###'
+        cd /mingw64/lib/
+        pwd
+        ls -d */
+        ls -c -ltd -- *tk*
+      shell: msys2 {0}
+
+    - name: Tk - VS17 - Build
+      if: inputs.cmake_generator == 'Visual Studio 17 2022'
+      run: |
+        echo '### download ###'
+        cd ~
+        git clone https://github.com/tcltk/tk.git
+        echo '### compile ###'
+        cd tk/win/
+        nmake -f makefile.vc
+        ls
+        echo '### install ###'
+        tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
+        cp 'C:\Users\runneradmin\tk\generic\tcl*.h'                    '${{github.workspace}}\dep\include/'
+        cp 'C:\Users\runneradmin\tk\win\tcl*.h'                        '${{github.workspace}}\dep\include/'
+        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.lib'    '${{github.workspace}}/dep/lib'
+        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.dll'    '${{github.workspace}}/dep/lib'
+        tree '${{github.workspace}}/dep' /f /a
+      shell: pwsh

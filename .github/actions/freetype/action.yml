@@ -1,0 +1,96 @@
+name: build_freetype
+description: 'Build FreeType library'
+
+inputs:
+  release:
+    description: 'Project directory with sources'
+    required: true
+    default: '2.12.1'
+  cmake_generator:
+    description: 'Makefile generator used by CMake'
+    required: true
+    default: 'Unix Makefiles'
+
+runs:
+  using: "composite"
+
+  steps:
+
+    - name: FreeType - Unix - Build
+      if: inputs.cmake_generator == 'Unix Makefiles'
+      run: |
+        echo '### download ###'
+        cd ~
+        wget https://download.savannah.gnu.org/releases/freetype/freetype-${{inputs.release}}.tar.xz
+        tar xf *.tar.xz
+        mv ./freetype-${{inputs.release}} ./freetype
+        tree ./freetype
+        echo '### configure ###'
+        cd "./freetype"
+        ./configure CFLAGS='-m64 -fPIC' CPPFLAGS='-m64 -fPIC' --with-zlib=no --with-bzip2=no --with-png=no --with-harfbuzz=no --with-brotli=no        
+        echo '### compile ###'
+        make -j 8
+        echo '### install ###'
+        sudo make install
+        echo '### include dir ###'
+        cd /usr/local/include/freetype2
+        pwd
+        ls -d */
+        ls -c -ltd -- *ft*
+        echo '### lib dir ###'
+        cd /usr/local/lib
+        pwd
+        ls -d */
+        ls -c -ltd -- *freetype*
+      shell: bash
+
+    - name: FreeType - MinGW - Build
+      if: inputs.cmake_generator == 'MinGW Makefiles'
+      run: |
+        echo '### download ###'
+        cd ~
+        wget https://download.savannah.gnu.org/releases/freetype/freetype-${{inputs.release}}.tar.xz
+        tar xf *.tar.xz
+        mv ./freetype-${{inputs.release}} ./freetype
+        echo '### configure ###'
+        cd "./freetype"
+        ./configure CFLAGS='-m64 -fPIC' CPPFLAGS='-m64 -fPIC' --with-zlib=no --with-bzip2=no --with-png=no --with-harfbuzz=no --with-brotli=no        
+        echo '### compile ###'
+        make -j 8
+        echo '### install ###'
+        make install
+        echo '### include dir ###'
+        cd /mingw64/include/freetype2
+        cygpath -w /mingw64/include
+        pwd
+        ls -d */
+        ls -c -ltd -- *ft*
+        echo '### lib dir ###'
+        cd /mingw64/lib/
+        cygpath -w /mingw64/lib
+        pwd
+        ls -d */
+        ls -c -ltd -- *freetype*
+      shell: msys2 {0}
+
+    - name: FreeType - VS17 - Dowload
+      if: inputs.cmake_generator == 'Visual Studio 17 2022'
+      run: |
+        echo '### download ###'
+        cd ~
+        git clone https://github.com/ubawurinna/freetype-windows-binaries.git ./freetype
+        echo '### install ###'
+        tree 'C:\Users\runneradmin\freetype' /f /a
+        cp './freetype/include/*'                                        '${{github.workspace}}/dep/include/'
+        cp './freetype/release static/vs2015-2022/win64/freetype.lib'    '${{github.workspace}}/dep/lib/'
+        cp './freetype/release dll/win64/*'                              '${{github.workspace}}/dep/lib/'
+        tree '${{github.workspace}}/dep' /f /a
+      shell: pwsh 
+
+#      run: |
+#        cd ~    
+#        Invoke-WebRequest -Uri "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.xz" -outfile "./freetype-2.12.1.tar.xz"
+#        7z x "./freetype-2.12.1.tar.xz" -o"./freetype-2.12.1.tar" -y 
+#        7z x "./freetype-2.12.1.tar" 
+#      shell: pwsh 
+      
