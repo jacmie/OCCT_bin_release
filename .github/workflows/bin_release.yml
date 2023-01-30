@@ -26,6 +26,7 @@ jobs:
             cmake_generator:    "Unix Makefiles"
             release_dir:        "/build"
             ext:                ""
+            bin_dir:            "lin64"
             compress:           "tar -czvf"
             compress_ext:       "UnixMake.tar.gz"
 
@@ -34,6 +35,7 @@ jobs:
             cmake_generator:    "Unix Makefiles"
             release_dir:        "/build"
             ext:                ""
+            bin_dir:            "macos64"
             compress:           "tar -czvf"
             compress_ext:       "UnixMake.tar.gz"
 
@@ -42,6 +44,7 @@ jobs:
             cmake_generator:    "MinGW Makefiles"
             release_dir:        "/build"
             ext:                ".exe"
+            bin_dir:            "win64"
             compress:           "7z a"
             compress_ext:       "MinGW.zip"
 
@@ -50,6 +53,7 @@ jobs:
             cmake_generator:    "Visual Studio 17 2022"  
             release_dir:        "/build/Release"
             ext:                ".exe"
+            bin_dir:            "win64"
             compress:           "7z a"
             compress_ext:       "VS17.zip"
 
@@ -163,7 +167,7 @@ jobs:
       - name: Build Release
         uses: ./.github/actions/generic_cmake_build
         with:        
-          shell_type: pwsh #${{ matrix.shell_type }}
+          shell_type: ${{ matrix.shell_type }}
           build_type: Release
           cmake_generator: ${{ matrix.cmake_generator }}
           parallel: 8
@@ -171,15 +175,20 @@ jobs:
 
       # Compress Artefacts
       - name: Compress Artefacts
-        shell: bash
-        run: |
-          cd '${{github.workspace}}${{ matrix.release_dir }}'
-          ls
-          ${{ matrix.compress}} build_${{ matrix.os }}_${{ matrix.compress_ext}} HelloCMake${{ matrix.ext }}
+        uses: ./.github/actions/compress
+        with:        
+          shell_type:   ${{ matrix.shell_type }}
+          release_dir:  ${{ matrix.release_dir }}
+          bin_dir:      ${{ matrix.bin_dir }}
+          compress:     ${{ matrix.compress }}
+          compress_ext: ${{ matrix.compress_ext }}
+          os:           ${{ matrix.os }}
+#        shell: bash
+#        run: |
+#          cd '${{github.workspace}}${{ matrix.release_dir }}'
+#          ls
+#          ${{ matrix.compress}} build_${{ matrix.os }}_${{ matrix.compress_ext}} HelloCMake${{ matrix.ext }}
 
-      # Log from Commits, from last version (needed tags indicating version starting with "v")
-      #- name: Get commits for release version log
-      #  run: git log $(git describe HEAD~ --match="v*" --tags --abbrev=0).. --pretty=format:'%as %s' > body.log
   
       # Create Github release with release note from file and binary asset attached
       - name: Deploy Release

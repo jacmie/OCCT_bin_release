@@ -37,9 +37,9 @@ runs:
       run: cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
       shell: ${{ inputs.shell_type }}
 
-#   - name: Build
-#     run: cmake --build ${{inputs.project_dir}}/build -j ${{ inputs.parallel }} --config ${{ inputs.build_type }}
-#     shell: ${{ inputs.shell_type }}
+    - name: Build
+      run: cmake --build ${{inputs.project_dir}}/build -j ${{ inputs.parallel }} --config ${{ inputs.build_type }}
+      shell: ${{ inputs.shell_type }}
 
 #   - name: Test
 #     if: ${{ inputs.tests_flag == 'true' }}
