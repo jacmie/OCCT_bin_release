@@ -38,7 +38,9 @@ runs:
     # Needs first: actions/checkout@v3
 
     - name: Configure CMake
-      run: cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_DIR=${{ inputs.dependency }}
+      run: |
+        echo '${{ inputs.dependency }}'
+        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/dep/include'
       shell: ${{ inputs.shell_type }}
 
     - name: Build
