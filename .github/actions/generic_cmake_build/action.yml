@@ -40,7 +40,7 @@ runs:
     - name: Configure CMake
       run: |
         echo '${{ inputs.dependency }}'
-        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/dep/include'
+        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_DIR='${{github.workspace}}/dep'
       shell: ${{ inputs.shell_type }}
 
     - name: Build
@@ -52,3 +52,5 @@ runs:
 #     working-directory: ${{inputs.project_dir}}/build
 #     run: ctest -C ${{ inputs.build_type }}
 #     shell: ${{ inputs.shell_type }}
+
+#     cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/dep/include'
