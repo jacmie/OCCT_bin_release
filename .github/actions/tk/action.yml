@@ -72,9 +72,9 @@ runs:
         ls
         echo '### install ###'
         tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
-        cp 'C:\Users\runneradmin\tk\generic\tcl*.h'                    '${{github.workspace}}\dep\include/'
-        cp 'C:\Users\runneradmin\tk\win\tcl*.h'                        '${{github.workspace}}\dep\include/'
-        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.lib'    '${{github.workspace}}/dep/lib'
-        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.dll'    '${{github.workspace}}/dep/lib'
+        cp 'C:\Users\runneradmin\tk\generic\tk*.h'                      '${{github.workspace}}\dep\include/'
+        cp 'C:\Users\runneradmin\tk\win\tk*.h'                          '${{github.workspace}}\dep\include/'
+        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.lib'     '${{github.workspace}}/dep/lib'
+        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.dll'     '${{github.workspace}}/dep/lib'
         tree '${{github.workspace}}/dep' /f /a
       shell: pwsh
