@@ -101,22 +101,22 @@ jobs:
           arch: x86_64
           vsversion: 17.0
 
-      # 3rd Party 
-      - name: Set catalogues structure for 3rd Party dependencies (Windows VS only) 
-        if: matrix.cmake_generator == 'Visual Studio 17 2022'
-        run: |
-          pwd
-          mkdir '${{github.workspace}}/dep/include'
-          mkdir '${{github.workspace}}/dep/lib'
-          mkdir '${{github.workspace}}/dep/bin'
-          tree  '${{github.workspace}}/dep' /f /a
+#     # 3rd Party 
+#     - name: Set catalogues structure for 3rd Party dependencies (Windows VS only) 
+#       if: matrix.cmake_generator == 'Visual Studio 17 2022'
+#       run: |
+#         pwd
+#         mkdir '${{github.workspace}}/dep/include'
+#         mkdir '${{github.workspace}}/dep/lib'
+#         mkdir '${{github.workspace}}/dep/bin'
+#         tree  '${{github.workspace}}/dep' /f /a
 
-      # Freetype
-      - name: Freetype - Dowload & Build
-        uses: ./.github/actions/freetype
-        with:        
-          release: 2.12.1
-          cmake_generator: ${{ matrix.cmake_generator }}
+#     # Freetype
+#     - name: Freetype - Dowload & Build
+#       uses: ./.github/actions/freetype
+#       with:        
+#         release: 2.12.1
+#         cmake_generator: ${{ matrix.cmake_generator }}
 
       # Tcl
       - name: Tcl - Dowload & Build
