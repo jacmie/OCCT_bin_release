@@ -71,6 +71,7 @@ runs:
         echo '### modified buildall.vc.bat ###'
         cd tcl/win/
         (get-command nmake).Path
+        mkdir '${{github.workspace}}\3rdparty\tcl-vc17-64'
         set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' 
         nmake -nologo -f makefile.vc release install OPTS=none
         echo '### install ###'
