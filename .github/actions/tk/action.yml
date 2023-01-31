@@ -66,15 +66,20 @@ runs:
         echo '### download ###'
         cd ~
         git clone https://github.com/tcltk/tk.git
-        echo '### compile ###'
         cd tk/win/
-        nmake -f makefile.vc
-        ls
-        echo '### install ###'
-        tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
-        cp 'C:\Users\runneradmin\tk\generic\tk*.h'                      '${{github.workspace}}\dep\include/'
-        cp 'C:\Users\runneradmin\tk\win\tk*.h'                          '${{github.workspace}}\dep\include/'
-        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.lib'     '${{github.workspace}}/dep/lib'
-        cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.dll'     '${{github.workspace}}/dep/lib'
-        tree '${{github.workspace}}/dep' /f /a
+        echo '### modified rules.vc ###'
+        (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
+        echo '### run nmake ###'
+        (get-command nmake).Path
+        nmake -nologo -f makefile.vc release install
+        tree C:\Tk /f /a
+#       nmake -f makefile.vc
+#       ls
+#       echo '### install ###'
+#       tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
+#       cp 'C:\Users\runneradmin\tk\generic\tk*.h'                      '${{github.workspace}}\dep\include/'
+#       cp 'C:\Users\runneradmin\tk\win\tk*.h'                          '${{github.workspace}}\dep\include/'
+#       cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.lib'     '${{github.workspace}}/dep/lib'
+#       cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.dll'     '${{github.workspace}}/dep/lib'
+#       tree '${{github.workspace}}/dep' /f /a
       shell: pwsh
