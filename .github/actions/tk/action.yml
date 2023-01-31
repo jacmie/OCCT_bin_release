@@ -72,7 +72,8 @@ runs:
         echo '### run nmake ###'
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
-        tree C:\Tk /f /a
+        tree C:\Tcl /f /a
+        echo $INSTALLDIR
 #       nmake -f makefile.vc
 #       ls
 #       echo '### install ###'
