@@ -72,27 +72,27 @@ runs:
         cd tcl/win/
         (get-command nmake).Path
         mkdir '${{github.workspace}}\3rdparty\tcl-vc17-64'
-        set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' 
-        nmake -nologo -f makefile.vc release install OPTS=none
+        $buildallpath = (get-command VsDevCmd.bat).Path
+        echo $buildallpath
+        (get-command nmake).Path
+        (Get-Content -Path buildall.vc.bat) `
+        -Replace 'off', 'on' `
+        -Replace 'call \".*VsDevCmd.bat\"', "call '$buildallpath' amd64" `
+        -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
+        -Replace 'htmlhelp', 'install' |
+        Set-Content -Path buildall.vc.bat
+        Get-Content -Path buildall.vc.bat
+        echo '### modified rules.vc ###'
+        (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
+        echo '### run buildall.vc.bat ###'
+        ./buildall.vc.bat
         echo '### install ###'
         cd '${{github.workspace}}\3rdparty\tcl-vc17-64'
         tree .
         cp "./tclsh*.exe" ./tclsh.exe
         tree .
-#       $buildallpath = (get-command VsDevCmd.bat).Path
-#       echo $buildallpath
-#       (get-command nmake).Path
-#       (Get-Content -Path buildall.vc.bat) `
-#       -Replace 'off', 'on' `
-#       -Replace 'call \".*VsDevCmd.bat\"', "call '$buildallpath' amd64" `
-#       -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
-#       -Replace 'htmlhelp', 'install' |
-#       Set-Content -Path buildall.vc.bat
-#       Get-Content -Path buildall.vc.bat
-#       echo '### modified rules.vc ###'
-#       (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
-#       echo '### run buildall.vc.bat ###'
-#       ./buildall.vc.bat
+#       set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' 
+#       nmake -nologo -f makefile.vc release install OPTS=none
 #       nmake -f makefile.vc
 #       echo '### install ###'
 #       tree 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934' /f /a
