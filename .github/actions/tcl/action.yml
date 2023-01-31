@@ -91,19 +91,20 @@ runs:
         tree C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934
         nmake -nologo -f makefile.vc install 
         tree '${{github.workspace}}\3rdparty\tcl-vc17-64'
-        tree C:\Tcl
-        set INSTALLDIR="${{github.workspace}}/3rdparty/tcl-vc17-64"
+        tree C:\Tcl /f /a
         echo '### nmake clean ###'
         nmake -nologo -f makefile.vc clean OPTS=none
+        set INSTALLDIR="${{github.workspace}}/3rdparty/tcl-vc17-64"
         echo '### nmake release ###'
         nmake -nologo -f makefile.vc release OPTS=none
+        tree C:\Tcl /f /a
         echo '### nmake install ###'
         nmake -nologo -f makefile.vc install OPTS=none
         echo '### install ###'
         cd '${{github.workspace}}\3rdparty\tcl-vc17-64'
-        tree .
+        tree . /f /a
         cp "./tclsh*.exe" ./tclsh.exe
-        tree .
+        tree . /f /a
 #       set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' 
 #       nmake -nologo -f makefile.vc release install OPTS=none
 #       nmake -f makefile.vc
