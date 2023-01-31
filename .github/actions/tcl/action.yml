@@ -68,27 +68,16 @@ runs:
         echo '### download ###'
         cd ~
         git clone https://github.com/tcltk/tcl.git
-        echo '### modified buildall.vc.bat ###'
         cd tcl/win/
-        pwd
-        (get-command nmake).Path
-        mkdir '${{github.workspace}}\3rdparty\tcl-vc17-64'
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
-        echo '### nmake release ###'
-        set INSTALLDIR="${{github.workspace}}/3rdparty/tcl-vc17-64"
+        echo '### run nmake ###'
+        (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
-        tree '${{github.workspace}}\3rdparty\tcl-vc17-64' /f /a
         tree C:\Tcl /f /a
-        echo '### install ###'
-        set INSTALLDIR="${{github.workspace}}/3rdparty/tcl-vc17-64"
-        nmake -nologo -f makefile.vc install
-        cd '${{github.workspace}}\3rdparty\tcl-vc17-64'
-        tree . /f /a
-        cp "./tclsh*.exe" ./tclsh.exe
-        tree . /f /a
       shell: pwsh
 
+#       echo '### modified buildall.vc.bat ###'
 #       $buildallpath = (get-command VsDevCmd.bat).Path
 #       echo $buildallpath
 #       (get-command nmake).Path
@@ -101,6 +90,11 @@ runs:
 #       Set-Content -Path buildall.vc.bat
 #       Get-Content -Path buildall.vc.bat
 
+#       cd '${{github.workspace}}\3rdparty\tcl-vc17-64'
+#       tree . /f /a
+#       cp "./tclsh*.exe" ./tclsh.exe
+#       tree . /f /a
+        
 #        echo '### nmake install ###'
 #        nmake -nologo -f makefile.vc install
 
