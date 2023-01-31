@@ -74,13 +74,13 @@ runs:
         cd tcl/win/
         echo '### modified buildall.vc.bat ###'
         (Get-Content -Path buildall.vc.bat) `
-        -Replace 'call \".*VsDevCmd.bat\"', 'call \"(get-command VsDevCmd.bat).Path\" amd64' `
+        -Replace 'call \".*VsDevCmd.bat\"', "call \"(get-command VsDevCmd.bat).Path\" amd64" `
         -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
         -Replace 'htmlhelp', 'htmlhelp install' |
         Set-Content -Path buildall.vc.bat
         Get-Content -Path buildall.vc.bat
         echo '### modified rules.vc ###'
-        (Get-Content -Path rules.vc) | -Replace 'tsgx', 'sgx'| Set-Content -Path rules.vc
+        (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         Get-Content -Path rules.vc
 #       echo '### built 0 ###'
 #       ./buildall.vc.bat
