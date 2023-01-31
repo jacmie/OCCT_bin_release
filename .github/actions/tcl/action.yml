@@ -69,13 +69,29 @@ runs:
         cd ~
         git clone https://github.com/tcltk/tcl.git
         echo '### compile ###'
+        echo $env:Path
+        (get-command nmake.exe).Path
         cd tcl/win/
-        nmake -f makefile.vc
-        echo '### install ###'
-        tree 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934' /f /a
-        cp 'C:\Users\runneradmin\tcl\generic\tcl*.h'                    '${{github.workspace}}/dep/include/'
-        cp 'C:\Users\runneradmin\tcl\win\tcl*.h'                        '${{github.workspace}}/dep/include/'
-        cp 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934\*.lib'    '${{github.workspace}}/dep/lib'
-        cp 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934\*.dll'    '${{github.workspace}}/dep/lib'
-        tree '${{github.workspace}}/dep' /f /a
+        $content = Get-Content -path "buildall.vc.bat"
+        $content -Replace "call \"*\vcvars32.bat\"", "call \"(get-command nmake.exe).Path\" amd64"
+        $content -Replace "set INSTALLDIR=*Tcl", 'set INSTALLDIR=${{github.workspace}}\3rdparty\tcl-vc17-64'
+        $content -Replace 'htmlhelp', 'htmlhelp install'
+        $secontent = Get-Content -path "rules.vc"
+        $secontent -Replace 'tsgx', 'sgx'
+        ./buildall.vc.bat
+        ./buildall.vc.bat
+        cd '${{github.workspace}}\3rdparty\${{github.workspace}}\3rdparty\tcl-vc17-64'
+        tree .
+        cp "./tclsh*.exe" ./tclsh.exe
+        tree .
+#       $third = Get-Content -path "makefile.vc"
+#       $third -Replace '-MD', '-MT'
+#       nmake -f makefile.vc
+#       echo '### install ###'
+#       tree 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934' /f /a
+#       cp 'C:\Users\runneradmin\tcl\generic\tcl*.h'                    '${{github.workspace}}/dep/include/'
+#       cp 'C:\Users\runneradmin\tcl\win\tcl*.h'                        '${{github.workspace}}/dep/include/'
+#       cp 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934\*.lib'    '${{github.workspace}}/dep/lib'
+#       cp 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934\*.dll'    '${{github.workspace}}/dep/lib'
+#       tree '${{github.workspace}}/dep' /f /a
       shell: pwsh
