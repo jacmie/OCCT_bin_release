@@ -75,7 +75,7 @@ runs:
         echo '### modified buildall.vc.bat ###'
         $buildallpath = (get-command VsDevCmd.bat).Path
         (Get-Content -Path buildall.vc.bat) `
-        -Replace 'call \".*VsDevCmd.bat\"', "call \"$buildallpath\" amd64" `
+        -Replace 'call \".*VsDevCmd.bat\"', "call '$buildallpath' amd64" `
         -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
         -Replace 'htmlhelp', 'htmlhelp install' |
         Set-Content -Path buildall.vc.bat
