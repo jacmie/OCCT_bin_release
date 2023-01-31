@@ -86,6 +86,9 @@ runs:
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         echo '### run buildall.vc.bat ###'
         ./buildall.vc.bat
+        tree C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934
+        set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' 
+        nmake -nologo -f makefile.vc release install OPTS=none
         echo '### install ###'
         cd '${{github.workspace}}\3rdparty\tcl-vc17-64'
         tree .
