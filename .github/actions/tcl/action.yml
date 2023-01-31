@@ -69,17 +69,16 @@ runs:
         cd ~
         git clone https://github.com/tcltk/tcl.git
         echo '### compile ###'
-        echo $env:Path
         echo '### nmake path ###'
         (get-command nmake.exe).Path
         cd tcl/win/
         echo '### buildall.vc.bat ###'
         (Get-Content -Path buildall.vc.bat) `
-        -Replace 'call \".*/vcvars32.bat\"', 'call \"(get-command nmake.exe).Path\" amd64'
-#       -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
-#       -Replace 'htmlhelp', 'htmlhelp install' |
-#       Set-Content -Path buildall.vc.bat
-#       Get-Content -Path buildall.vc.bat
+        -Replace 'call \".*/vcvars32.bat\"', 'call \"(get-command nmake.exe).Path\" amd64' `
+        -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
+        -Replace 'htmlhelp', 'htmlhelp install' |
+        Set-Content -Path buildall.vc.bat
+        Get-Content -Path buildall.vc.bat
 #       echo '### rules.vc ###'
 #       (Get-Content -Path rules.vc) | -Replace 'tsgx', 'sgx'| Set-Content -Path rules.vc
 #       Get-Content -Path rules.vc
@@ -103,3 +102,5 @@ runs:
 #       cp 'C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934\*.dll'    '${{github.workspace}}/dep/lib'
 #       tree '${{github.workspace}}/dep' /f /a
       shell: pwsh
+
+#       echo $env:Path
