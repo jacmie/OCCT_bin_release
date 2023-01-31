@@ -74,8 +74,8 @@ runs:
         (get-command nmake.exe).Path
         cd tcl/win/
         echo '### buildall.vc.bat ###'
-        (Get-Content -Path buildall.vc.bat)
-#       -Replace 'call \".*/vcvars32.bat\"', 'call \"(get-command nmake.exe).Path\" amd64' `
+        Get-Content -Path buildall.vc.bat `
+        -Replace 'call \".*/vcvars32.bat\"', 'call \"(get-command nmake.exe).Path\" amd64'
 #       -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
 #       -Replace 'htmlhelp', 'htmlhelp install' |
 #       Set-Content -Path buildall.vc.bat
