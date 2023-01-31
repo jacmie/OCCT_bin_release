@@ -70,27 +70,28 @@ runs:
         git clone https://github.com/tcltk/tcl.git
         echo '### compile ###'
         echo $env:Path
+        echo '### nmake path ###'
         (get-command nmake.exe).Path
         cd tcl/win/
         echo ### buildall.vc.bat ###
-        (Get-Content -Path buildall.vc.bat) `
-        -Replace 'call \".*/vcvars32.bat\"', 'call \"(get-command nmake.exe).Path\" amd64' `
-        -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
-        -Replace 'htmlhelp', 'htmlhelp install' |
-        Set-Content -Path buildall.vc.bat
-        Get-Content -Path buildall.vc.bat
-        echo ### rules.vc ###
-        (Get-Content -Path rules.vc) | -Replace 'tsgx', 'sgx'| Set-Content -Path rules.vc
-        Get-Content -Path rules.vc
-        echo ### built 0 ###
-        ./buildall.vc.bat
-        echo ### built 1 ###
-        ./buildall.vc.bat
-        echo ### built 2 ###
-        cd '${{github.workspace}}\3rdparty\${{github.workspace}}\3rdparty\tcl-vc17-64'
-        tree .
-        cp "./tclsh*.exe" ./tclsh.exe
-        tree .
+        (Get-Content -Path buildall.vc.bat)
+#       -Replace 'call \".*/vcvars32.bat\"', 'call \"(get-command nmake.exe).Path\" amd64' `
+#       -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
+#       -Replace 'htmlhelp', 'htmlhelp install' |
+#       Set-Content -Path buildall.vc.bat
+#       Get-Content -Path buildall.vc.bat
+#       echo ### rules.vc ###
+#       (Get-Content -Path rules.vc) | -Replace 'tsgx', 'sgx'| Set-Content -Path rules.vc
+#       Get-Content -Path rules.vc
+#       echo ### built 0 ###
+#       ./buildall.vc.bat
+#       echo ### built 1 ###
+#       ./buildall.vc.bat
+#       echo ### built 2 ###
+#       cd '${{github.workspace}}\3rdparty\${{github.workspace}}\3rdparty\tcl-vc17-64'
+#       tree .
+#       cp "./tclsh*.exe" ./tclsh.exe
+#       tree .
 #       $third = Get-Content -path "makefile.vc"
 #       $third -Replace '-MD', '-MT'
 #       nmake -f makefile.vc
