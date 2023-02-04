@@ -87,27 +87,13 @@ runs:
         (get-command MSBuild).Path
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         tree ./freetype/objs /f /a
-        pwd
-        echo '*** marker 1 ***'
-        echo './freetype/include'
-        echo '~/freetype/include'
-        echo '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin/'
-        echo '*** marker 2 ***'
-        pwd
-        echo '~/freetype/objs/x64/Release/freetype.dll'
+        echo '### install ###'
         mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
         mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
-        tree '${{github.workspace}}/3rdparty' /f /a
-        Copy-Item -Path './freetype/include'                -Destination '${{github.workspace}}\3rdparty\freetype-vc17-64-release' -Recurse
-        tree '${{github.workspace}}/3rdparty' /f /a
-        cp -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
+        cp -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release' -Recurse
+        cp -Path './freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
         cp -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
         tree '${{github.workspace}}/3rdparty' /f /a
-        echo '*** marker 3 ***'
-        cd 'D:'
-        tree '${{github.workspace}}/3rdparty' /f /a
-        cd '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
-        ls
       shell: pwsh 
         
 #       tree C:\Tcl /f /a
