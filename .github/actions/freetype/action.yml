@@ -86,7 +86,6 @@ runs:
         echo '### compile ###'
         (get-command MSBuild).Path
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
-        tree ./freetype/objs /f /a
         echo '### install ###'
         mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
         mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
@@ -96,20 +95,6 @@ runs:
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh 
         
-#       tree C:\Tcl /f /a
-#       mv -path C:\Tcl -destination '${{github.workspace}}/3rdparty/tcl-vc17-64-release'
-#       tree '${{github.workspace}}/3rdparty' /f /a
-
-
-#       Copy-Item -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
-        
-#       MSBuild.exe -p:Configuration='Release Static' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
-#       tree ./freetype/objs /f /a
-
-#       mv -path ./freetype/objs/x64/Release/freetype.dll.recipe    -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
-#       mv -path ./freetype/objs/x64/Release/freetype.exp           -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
-#       mv -path ./freetype/objs/x64/Release/freetype.pdb           -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
-
 #     run: |
 #       echo '### download ###'
 #       cd ~
