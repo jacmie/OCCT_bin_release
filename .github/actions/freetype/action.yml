@@ -79,18 +79,17 @@ runs:
         echo '### download ###'
         cd ~
         Invoke-WebRequest -Uri 'https://download.savannah.gnu.org/releases/freetype/freetype-${{inputs.release}}.tar.xz' -outfile './freetype.tar.xz'
+        echo '### unzip ###'
         7z x './freetype.tar.xz' 
         7z x './freetype.tar'
-        ls
         mv -path './freetype-${{inputs.release}}' -destination './freetype'
-        ls
+        echo '### compile ###'
         (get-command MSBuild).Path
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
-        tree ./freetype/include /f /a
         MSBuild.exe -p:Configuration='Release Static' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         tree ./freetype/objs/x64 /f /a
-        cat ./freetype/objs/README
-        mv -path './freetype/include'                               -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release'
+        echo '### install ###'
+        mv -path './freetype/include'                               -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/include'
         mv -path './freetype/objs/x64/Release/freetype.dll'         -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
         mv -path './freetype/objs/x64/Release Static/freetype.lib'  -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
         tree '${{github.workspace}}/3rdparty' /f /a
