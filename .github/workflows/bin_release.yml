@@ -186,7 +186,7 @@ jobs:
           compress:     ${{ matrix.compress }}
           compress_ext: ${{ matrix.compress_ext }}
           os:           ${{ matrix.os }}
-        shell: bash
+#       shell: bash
 #       run: |
 #         cd '${{github.workspace}}${{ matrix.release_dir }}'
 #         ls
