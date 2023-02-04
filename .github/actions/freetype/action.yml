@@ -78,9 +78,11 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        Invoke-WebRequest -Uri "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.xz" -outfile "./freetype.tar.xz"
-        7z x "./freetype.tar.xz" 
-        7z x "./freetype.tar"
+        Invoke-WebRequest -Uri 'https://download.savannah.gnu.org/releases/freetype/freetype-${{inputs.release}}.tar.xz' -outfile './freetype.tar.xz'
+        7z x './freetype.tar.xz' 
+        7z x './freetype.tar'
+        ls
+        mv -path './freetype-${{inputs.release}}' -destination './freetype'
         ls
         cd './freetype'
         (get-command MSBuild).Path
