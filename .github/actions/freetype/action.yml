@@ -88,7 +88,7 @@ runs:
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         tree ./freetype/objs /f /a
         cp './freetype/include'                         -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/include'
-        cp './freetype/objs/x64/Release/freetype.dll'   '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin/freetype.dll'
+        cp './freetype/objs/x64/Release/freetype.dll'   '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
         cp './freetype/objs/x64/Release/freetype.lib'   -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh 
