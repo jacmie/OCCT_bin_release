@@ -78,14 +78,30 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        git clone https://github.com/ubawurinna/freetype-windows-binaries.git ./freetype
-        echo '### install ###'
-        tree 'C:\Users\runneradmin\freetype' /f /a
-        cp './freetype/include/*'                                        '${{github.workspace}}/dep/include/'
-        cp './freetype/release static/vs2015-2022/win64/freetype.lib'    '${{github.workspace}}/dep/lib/'
-        cp './freetype/release dll/win64/*'                              '${{github.workspace}}/dep/lib/'
-        tree '${{github.workspace}}/dep' /f /a
+        Invoke-WebRequest -Uri "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.xz" -outfile "./freetype.tar.xz"
+        7z x "./freetype.tar.xz" -o"./freetype.tar" -y 
+        7z x "./freetype.tar"
+        ls
+        cd './freetype'
+        (get-command MSBuild).Path
+        MSBuild.exe -p:Configuration='Release' -p:Platform=x64 builds/windows/vc2010/freetype.vcxproj
+        tree . /f /a
+        MSBuild.exe -p:Configuration='Release Static' -p:Platform=x64 builds/windows/vc2010/freetype.vcxproj
+        tree . /f /a
+#       tree '${{github.workspace}}/dep' /f /a
       shell: pwsh 
+
+#     run: |
+#       echo '### download ###'
+#       cd ~
+#       git clone https://github.com/ubawurinna/freetype-windows-binaries.git ./freetype
+#       echo '### install ###'
+#       tree 'C:\Users\runneradmin\freetype' /f /a
+#       cp './freetype/include/*'                                        '${{github.workspace}}/dep/include/'
+#       cp './freetype/release static/vs2015-2022/win64/freetype.lib'    '${{github.workspace}}/dep/lib/'
+#       cp './freetype/release dll/win64/*'                              '${{github.workspace}}/dep/lib/'
+#       tree '${{github.workspace}}/dep' /f /a
+#     shell: pwsh 
 
 #      run: |
 #        cd ~    

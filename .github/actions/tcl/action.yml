@@ -75,6 +75,8 @@ runs:
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
         tree C:\Tcl /f /a
+        mv -path C:\Tcl -destination '${{github.workspace}}/3rdparty/tcl-vc17-64'
+        tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
 
 #       echo '### modified buildall.vc.bat ###'
