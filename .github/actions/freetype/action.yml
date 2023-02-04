@@ -84,7 +84,6 @@ runs:
         ls
         mv -path './freetype-${{inputs.release}}' -destination './freetype'
         ls
-        cd './freetype'
         (get-command MSBuild).Path
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         tree ./freetype/include /f /a
