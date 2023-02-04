@@ -40,9 +40,8 @@ runs:
     - name: Configure CMake
       run: |
         echo '${{ inputs.dependency }}'
-        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build ` 
-        -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_DIR='${{github.workspace}}/3rdparty' `
-        -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/bin' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/3rdparty/bin'
+        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
+        -D3RDPARTY_TCL_DIR='${{github.workspace}}/3rdparty/tcl-vc17-x64-release' -D3RDPARTY_TK_DIR='${{github.workspace}}/3rdparty/tk-vc17-x64-release'
       shell: ${{ inputs.shell_type }}
 
     - name: Build
