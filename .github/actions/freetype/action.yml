@@ -87,11 +87,11 @@ runs:
         (get-command MSBuild).Path
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         echo '### install ###'
-        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
-        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
-        cp -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release' -Recurse
-        cp -Path './freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
-        cp -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
+        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-x64-release/lib'
+        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-x64-release/bin'
+        cp -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-x64-release' -Recurse
+        cp -Path './freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-x64-release/bin"
+        cp -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-x64-release/lib'
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh 
         

@@ -40,7 +40,7 @@ runs:
     - name: Configure CMake
       run: |
         echo '${{ inputs.dependency }}'
-        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_FREETYPE_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_FREETYPE_LIBRARY_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_FREETYPE_DLL_DIR='${{github.workspace}}/dep/lib'
+        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_DIR='${{github.workspace}}/3rdparty' 
       shell: ${{ inputs.shell_type }}
 
     - name: Build
@@ -53,3 +53,4 @@ runs:
 #     run: ctest -C ${{ inputs.build_type }}
 #     shell: ${{ inputs.shell_type }}
 
+#        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_FREETYPE_INCLUDE_DIR='${{github.workspace}}/dep/include' -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_FREETYPE_LIBRARY_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/dep/lib' -D3RDPARTY_FREETYPE_DLL_DIR='${{github.workspace}}/dep/lib'

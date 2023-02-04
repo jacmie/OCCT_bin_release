@@ -73,7 +73,7 @@ runs:
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
         echo '### install ###'
-        mv -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tk-vc17-64-release'
+        mv -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tk-vc17-x64-release'
         tree '${{github.workspace}}/3rdparty' /f /a
 #       nmake -f makefile.vc
 #       ls
