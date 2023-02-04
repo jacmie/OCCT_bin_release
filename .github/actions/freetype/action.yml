@@ -88,16 +88,20 @@ runs:
         MSBuild.exe -p:Configuration='Release' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         tree ./freetype/objs /f /a
         pwd
+        echo '*** marker 1 ***'
         echo './freetype/include'
         echo '~/freetype/include'
         echo '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin/'
+        echo '*** marker 2 ***'
         cd './freetype'
         ls
         cd ..
-        mv -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/include'
-        mv -Path './freetype/objs/x64/Release/freetype.dll' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release\bin\'
-        mv -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib/freetype.lib'
-        tree '${{github.workspace}}/3rdparty' /f /a
+        echo '*** marker 3 ***'
+        pwd
+#       mv -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/include'
+#       mv -Path './freetype/objs/x64/Release/freetype.dll' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release\bin\'
+#       mv -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib/freetype.lib'
+#       tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh 
         
 #       MSBuild.exe -p:Configuration='Release Static' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
