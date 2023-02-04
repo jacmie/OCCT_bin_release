@@ -79,7 +79,7 @@ runs:
         echo '### download ###'
         cd ~
         Invoke-WebRequest -Uri "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.xz" -outfile "./freetype.tar.xz"
-        7z x "./freetype.tar.xz" -o"./freetype.tar" -y 
+        7z x "./freetype.tar.xz" 
         7z x "./freetype.tar"
         ls
         cd './freetype'
