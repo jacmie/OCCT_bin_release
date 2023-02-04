@@ -90,7 +90,6 @@ runs:
         tree ./freetype/include /f /a
         MSBuild.exe -p:Configuration='Release Static' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
         tree ./freetype/objs/x64 /f /a
-#       tree '${{github.workspace}}/dep' /f /a
         cat ./freetype/objs/README
         mv -path './freetype/include'                               -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release'
         mv -path './freetype/objs/x64/Release/freetype.dll'         -destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
