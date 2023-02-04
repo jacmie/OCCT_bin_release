@@ -100,7 +100,7 @@ runs:
         pwd
         echo '~/freetype/objs/x64/Release/freetype.dll'
         Copy-Item -Path './freetype/include'                       -Destination '${{github.workspace}}\3rdparty\freetype-vc17-64-release\include'
-        Copy-Item -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination '${{github.workspace}}\3rdparty\freetype-vc17-64-release\bin\'
+        Copy-Item -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin/"
 #       mv -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib/freetype.lib'
 #       tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh 
