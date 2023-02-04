@@ -95,8 +95,14 @@ runs:
         echo '*** marker 2 ***'
         pwd
         echo '~/freetype/objs/x64/Release/freetype.dll'
+        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/include'
+        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib'
+        mkdir '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
+        tree '${{github.workspace}}/3rdparty' /f /a
         Copy-Item -Path './freetype/include'                       -Destination '${{github.workspace}}\3rdparty\freetype-vc17-64-release\include'
+        tree '${{github.workspace}}/3rdparty' /f /a
         Copy-Item -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
+        tree '${{github.workspace}}/3rdparty' /f /a
         echo '*** marker 3 ***'
         cd 'D:'
         tree '${{github.workspace}}/3rdparty' /f /a
