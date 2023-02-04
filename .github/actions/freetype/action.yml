@@ -99,9 +99,17 @@ runs:
         Copy-Item -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
         echo '*** marker 3 ***'
         cd 'D:'
-        tree ${{github.workspace}}/3rdparty /f /a
-#       mv -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib/freetype.lib'
+        tree '${{github.workspace}}/3rdparty' /f /a
+        cd '${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin'
+        ls
       shell: pwsh 
+        
+#       tree C:\Tcl /f /a
+#       mv -path C:\Tcl -destination '${{github.workspace}}/3rdparty/tcl-vc17-64-release'
+#       tree '${{github.workspace}}/3rdparty' /f /a
+
+#       mv -Path './freetype/objs/x64/Release/freetype.lib' -Destination '${{github.workspace}}/3rdparty/freetype-vc17-64-release/lib/freetype.lib'
+
 #       Copy-Item -Path '~/freetype/objs/x64/Release/freetype.dll' -Destination "${{github.workspace}}/3rdparty/freetype-vc17-64-release/bin"
         
 #       MSBuild.exe -p:Configuration='Release Static' -p:Platform=x64 ./freetype/builds/windows/vc2010/freetype.vcxproj
