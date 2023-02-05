@@ -41,25 +41,25 @@ jobs:
 #           compress:           "tar -czvf"
 #           compress_ext:       "UnixMake.tar.gz"
 
-#         - os:                 windows-latest
-#           shell_type:         pwsh
-#           cmake_generator:    "MinGW Makefiles"
-#           release_dir:        "/build"
-#           dependency:         "D:/a/_temp/msys64/mingw64"
-#           ext:                ".exe"
-#           bin_dir:            "win64"
-#           compress:           "7z a"
-#           compress_ext:       "MinGW.zip"
-
           - os:                 windows-latest
             shell_type:         pwsh
-            cmake_generator:    "Visual Studio 17 2022"  
-            release_dir:        "/build/Release"
-            dependency:         "/dep"
+            cmake_generator:    "MinGW Makefiles"
+            release_dir:        "/build"
+            dependency:         "D:/a/_temp/msys64/mingw64"
             ext:                ".exe"
             bin_dir:            "win64"
             compress:           "7z a"
-            compress_ext:       "VS17.zip"
+            compress_ext:       "MinGW.zip"
+
+#         - os:                 windows-latest
+#           shell_type:         pwsh
+#           cmake_generator:    "Visual Studio 17 2022"  
+#           release_dir:        "/build/Release"
+#           dependency:         "/dep"
+#           ext:                ".exe"
+#           bin_dir:            "win64"
+#           compress:           "7z a"
+#           compress_ext:       "VS17.zip"
 
     permissions:
       contents: write
@@ -104,47 +104,47 @@ jobs:
           release: 2.12.1
           cmake_generator: ${{ matrix.cmake_generator }}
 
-#     # Tcl
-#     - name: Tcl - Dowload & Build
-#       uses: ./.github/actions/tcl
-#       with:        
-#         cmake_generator: ${{ matrix.cmake_generator }}
+      # Tcl
+      - name: Tcl - Dowload & Build
+        uses: ./.github/actions/tcl
+        with:        
+          cmake_generator: ${{ matrix.cmake_generator }}
 
-#     # Tk
-#     - name: Tk - Dowload & Build
-#       uses: ./.github/actions/tk
-#       with:        
-#         cmake_generator: ${{ matrix.cmake_generator }}
+      # Tk
+      - name: Tk - Dowload & Build
+        uses: ./.github/actions/tk
+        with:        
+          cmake_generator: ${{ matrix.cmake_generator }}
 
-#     # 3rd Party dependencies
-#     - name: 3rd Party - Unix
-#       if: matrix.cmake_generator == 'Unix Makefiles'
-#       run: |
-#         echo '### include dir ###'
-#         cd /usr/local/include/freetype2
-#         pwd
-#         ls -d */
-#         ls -c -ltd -- *ft*
-#         cd /usr/local/include
-#         pwd
-#         ls -d */
-#         ls -c -ltd -- *tcl*
-#         ls -c -ltd -- *tk*
-#         echo '### lib dir ###'
-#         cd /usr/local/lib
-#         pwd
-#         ls -d */
-#         ls -c -ltd -- *freetype*
-#         ls -c -ltd -- *tcl*
-#         ls -c -ltd -- *tk*
-#       shell: bash
+      # 3rd Party dependencies
+      - name: 3rd Party - Unix
+        if: matrix.cmake_generator == 'Unix Makefiles'
+        run: |
+          echo '### include dir ###'
+          cd /usr/local/include/freetype2
+          pwd
+          ls -d */
+          ls -c -ltd -- *ft*
+          cd /usr/local/include
+          pwd
+          ls -d */
+          ls -c -ltd -- *tcl*
+          ls -c -ltd -- *tk*
+          echo '### lib dir ###'
+          cd /usr/local/lib
+          pwd
+          ls -d */
+          ls -c -ltd -- *freetype*
+          ls -c -ltd -- *tcl*
+          ls -c -ltd -- *tk*
+        shell: bash
 
-#     - name: 3rd Party - MinGW
-#       if: matrix.cmake_generator == 'MinGW Makefiles'
-#       run: |
-#         Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\include\freetype2'
-#         Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\lib'
-#       shell: pwsh
+      - name: 3rd Party - MinGW
+        if: matrix.cmake_generator == 'MinGW Makefiles'
+        run: |
+          Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\include\freetype2'
+          Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\lib'
+        shell: pwsh
 
       # Build Release
       - name: Build Release
@@ -173,16 +173,14 @@ jobs:
 #         cd '${{github.workspace}}${{ matrix.release_dir }}'
 #         ls
 #         ${{ matrix.compress}} build_${{ matrix.os }}_${{ matrix.compress_ext}} HelloCMake${{ matrix.ext }}
-
-# 
-#     # Create Github release with release note from file and binary asset attached
-#     - name: Deploy Release
-#       uses: ncipollo/release-action@v1
-#       with:
-#         allowUpdates: true
-#         name: ${{ env.GITHUB_REF_NAME }}
-#         tag: ${{ env.GITHUB_REF_NAME }}
-#         artifacts: '${{github.workspace}}${{ matrix.release_dir }}/build_${{ matrix.os }}_${{ matrix.compress_ext}}'
-#         #bodyFile: "body.log"
-#         token: ${{ secrets.GITHUB_TOKEN }}
+  
+      # Create Github release with release note from file and binary asset attached
+      - name: Deploy Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          name: ${{ env.GITHUB_REF_NAME }}
+          tag: ${{ env.GITHUB_REF_NAME }}
+          artifacts: '${{github.workspace}}${{ matrix.release_dir }}/build_${{ matrix.os }}_${{ matrix.compress_ext}}'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
