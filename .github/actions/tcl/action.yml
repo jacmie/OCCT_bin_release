@@ -73,9 +73,9 @@ runs:
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         echo '### run nmake ###'
         (get-command nmake).Path
-        nmake -nologo -f makefile.vc release install
+        nmake -nologo -f makefile.vc all install
         echo '### install ###'
-        cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release' -Recurse
+        cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-all' -Recurse
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
 
