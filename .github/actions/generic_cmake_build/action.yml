@@ -38,6 +38,7 @@ runs:
     # Needs first: actions/checkout@v3
     
     - name: Download Tcl/Tk
+      run: |
         echo '### download ###'
         cd '${{github.workspace}}/3rdparty'
         Invoke-WebRequest -Uri 'https://dev.opencascade.org/system/files/occt/3rdparty/tcltk-86-32.zip'
