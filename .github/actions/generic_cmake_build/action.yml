@@ -45,13 +45,14 @@ runs:
         -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcl-vc17-x64-release/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tk-vc17-x64-release/include' `
         -D3RDPARTY_FREETYPE_INCLUDE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release/include' `
         -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcl-vc17-x64-release/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/3rdparty/tk-vc17-x64-release/lib' `
-        -D3RDPARTY_FREETYPE_LIBRARY_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release/lib' `
         -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcl-vc17-x64-release/bin' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/3rdparty/tk-vc17-x64-release/bin' `
-        -D3RDPARTY_FREETYPE_DLL_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release/bin'
       shell: ${{ inputs.shell_type }}
 
 #        -D3RDPARTY_DIR='${{github.workspace}}/3rdparty' `
 #       -D3RDPARTY_TCL_DIR='${{github.workspace}}/3rdparty/tcl-vc17-x64-release' -D3RDPARTY_TK_DIR='${{github.workspace}}/3rdparty/tk-vc17-x64-release' `
+#        -D3RDPARTY_FREETYPE_LIBRARY_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release/lib' `
+#        -D3RDPARTY_FREETYPE_DLL_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release/bin'
+        
     - name: Build
       run: cmake --build ${{inputs.project_dir}}/build -j ${{ inputs.parallel }} --config ${{ inputs.build_type }}
       shell: ${{ inputs.shell_type }}

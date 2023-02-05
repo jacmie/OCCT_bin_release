@@ -75,7 +75,7 @@ runs:
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
         echo '### install ###'
-        mv -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release'
+        cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release'
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
 
