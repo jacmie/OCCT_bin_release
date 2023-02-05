@@ -69,26 +69,27 @@ runs:
         cd tk/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
-        $buildallpath = (get-command VsDevCmd.bat).Path
-        echo '### modified buildall.vc.bat ###'
-        echo $buildallpath
+        echo '### run nmake ###'
         (get-command nmake).Path
-        (Get-Content -Path buildall.vc.bat) `
-        -Replace 'off', 'on' `
-        -Replace 'call \".*vcvars32.bat\"', 'call \"$buildallpath\" amd64' ` 
-        -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' `
-        -Replace 'htmlhelp', 'install' `
-        -Replace 'shell', 'shell install' |
-        Set-Content -Path buildall.vc.bat
-        Get-Content -Path buildall.vc.bat
-        tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
-        ./buildall.vc.bat
+        nmake -nologo -f makefile.vc release install
+        echo '### install ###'
+        cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tk-vc17-x64-release' -Recurse
         tree '${{github.workspace}}/3rdparty' /f /a
-#       echo '### run nmake ###'
-#       (get-command nmake).Path
-#       nmake -nologo -f makefile.vc release install
-#       echo '### install ###'
-#       cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tk-vc17-x64-release' -Recurse
       shell: pwsh
         
+#       echo '### modified buildall.vc.bat ###'
+#       $buildallpath = (get-command VsDevCmd.bat).Path
+#       echo $buildallpath
+#       (get-command nmake).Path
+#       (Get-Content -Path buildall.vc.bat) `
+#       -Replace 'off', 'on' `
+#       -Replace 'call \".*vcvars32.bat\"', 'call \"$buildallpath\" amd64' ` 
+#       -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' `
+#       -Replace 'htmlhelp', 'install' `
+#       -Replace 'shell', 'shell install' |
+#       Set-Content -Path buildall.vc.bat
+#       Get-Content -Path buildall.vc.bat
+#       tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
+#       ./buildall.vc.bat
+
 #      -Replace 'call \".*vcvars32.bat\"', 'set \"VSCMD_START_DIR=%CD%\"\ncall "$buildallpath" amd64' ` 
