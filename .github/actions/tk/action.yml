@@ -69,19 +69,23 @@ runs:
         cd tk/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
-        echo '### run nmake ###'
+        $buildallpath = (get-command VsDevCmd.bat).Path
+        echo '### modified buildall.vc.bat ###'
+        echo $buildallpath
         (get-command nmake).Path
-        nmake -nologo -f makefile.vc release install
-        echo '### install ###'
-        cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tk-vc17-x64-release' -Recurse
+        (Get-Content -Path buildall.vc.bat) `
+        -Replace 'off', 'on' `
+        -Replace 'call \".*VsDevCmd.bat\"', "call '$buildallpath' amd64" `
+        -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' `
+        -Replace 'htmlhelp', 'install' `
+        -Replace 'shell', 'shell install' |
+        Set-Content -Path buildall.vc.bat
+        Get-Content -Path buildall.vc.bat
+        ./buildall.vc.bat
         tree '${{github.workspace}}/3rdparty' /f /a
-#       nmake -f makefile.vc
-#       ls
+#       echo '### run nmake ###'
+#       (get-command nmake).Path
+#       nmake -nologo -f makefile.vc release install
 #       echo '### install ###'
-#       tree 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934' /f /a
-#       cp 'C:\Users\runneradmin\tk\generic\tk*.h'                      '${{github.workspace}}\dep\include/'
-#       cp 'C:\Users\runneradmin\tk\win\tk*.h'                          '${{github.workspace}}\dep\include/'
-#       cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.lib'     '${{github.workspace}}/dep/lib'
-#       cp 'C:\Users\runneradmin\tk\win\Release_AMD64_VC1934\*.dll'     '${{github.workspace}}/dep/lib'
-#       tree '${{github.workspace}}/dep' /f /a
+#       cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tk-vc17-x64-release' -Recurse
       shell: pwsh
