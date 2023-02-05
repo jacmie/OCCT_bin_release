@@ -36,18 +36,40 @@ runs:
   steps:
 
     # Needs first: actions/checkout@v3
-
+    
+    - name: Download Tcl/Tk
+        echo '### download ###'
+        cd '${{github.workspace}}/3rdparty'
+        Invoke-WebRequest -Uri 'https://dev.opencascade.org/system/files/occt/3rdparty/tcltk-86-32.zip'
+        echo '### unzip ###'
+        7z x 'tcltk-86-32.zip'
+        tree '${{github.workspace}}/3rdparty' /f /a
+      shell: ${{ inputs.shell_type }}
+    
     - name: Configure CMake
       run: |
         echo '${{ inputs.dependency }}'
         cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
-        -D3RDPARTY_FREETYPE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release' `
-        -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' `
-        -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib' `
-        -D3RDPARTY_TCL_LIBRARY='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib/tcl90.lib' -D3RDPARTY_TK_LIBRARY='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/tcl9tk87.lib' `
-        -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin' ` 
-        -D3RDPARTY_TCL_DLL='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin/tcl90.dll' -D3RDPARTY_TK_DLL='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin/tcl9tk87.dll' 
+        -D3RDPARTY_TCL_DIR='${{github.workspace}}/3rdparty/tcltk-86-32' -D3RDPARTY_TK_DIR='${{github.workspace}}/3rdparty/tcltk-86-32' `
+        -D3RDPARTY_FREETYPE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release' 
+#       -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' `
+#       -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib' `
+#       -D3RDPARTY_TCL_LIBRARY='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib/tcl90.lib' -D3RDPARTY_TK_LIBRARY='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/tcl9tk87.lib' `
+#       -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin' ` 
+#       -D3RDPARTY_TCL_DLL='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin/tcl90.dll' -D3RDPARTY_TK_DLL='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin/tcl9tk87.dll' 
       shell: ${{ inputs.shell_type }}
+
+#   - name: Configure CMake
+#     run: |
+#       echo '${{ inputs.dependency }}'
+#       cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
+#       -D3RDPARTY_FREETYPE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release' `
+#       -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' `
+#       -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib' `
+#       -D3RDPARTY_TCL_LIBRARY='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib/tcl90.lib' -D3RDPARTY_TK_LIBRARY='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/tcl9tk87.lib' `
+#       -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin' ` 
+#       -D3RDPARTY_TCL_DLL='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin/tcl90.dll' -D3RDPARTY_TK_DLL='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin/tcl9tk87.dll' 
+#     shell: ${{ inputs.shell_type }}
 
 #        -D3RDPARTY_DIR='${{github.workspace}}/3rdparty' `
 #       -D3RDPARTY_TCL_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' -D3RDPARTY_TK_DIR='${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' `
