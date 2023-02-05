@@ -71,46 +71,29 @@ runs:
         cd tcl/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
-        echo '### run nmake ###'
+        echo '### modified buildall.vc.bat ###'
+        $buildallpath = (get-command VsDevCmd.bat).Path
+        echo $buildallpath
         (get-command nmake).Path
-        nmake -nologo -f makefile.vc release install
+        (Get-Content -Path buildall.vc.bat) `
+        -Replace 'off', 'on' `
+        -Replace 'call \".*VsDevCmd.bat\"', "call '$buildallpath' amd64" `
+        -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-x64-release' `
+        -Replace 'htmlhelp', 'install' `
+        -Replace 'shell', 'shell install' |
+        Set-Content -Path buildall.vc.bat
+        Get-Content -Path buildall.vc.bat
         echo '### install ###'
-        cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release' -Recurse
+        mv -Path 'C:/Tcl/bin/tclsh*.exe' -Destination 'C:/Tcl/bin/tclsh.exe'
+        cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release' -Recurse
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
 
-#       cp -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-x64-release' -Recurse
+#       cp -Path '${{github.workspace}}/3rdparty/tcl-vc17-x64-release/bin/tclsh*.exe' -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release/bin/tclsh.exe'
 
-#       echo '### modified buildall.vc.bat ###'
-#       $buildallpath = (get-command VsDevCmd.bat).Path
-#       echo $buildallpath
+#       echo '### run nmake ###'
 #       (get-command nmake).Path
-#       (Get-Content -Path buildall.vc.bat) `
-#       -Replace 'off', 'on' `
-#       -Replace 'call \".*VsDevCmd.bat\"', "call '$buildallpath' amd64" `
-#       -Replace 'set INSTALLDIR=.*Tcl', 'set INSTALLDIR=${{github.workspace}}/3rdparty/tcl-vc17-64' `
-#       -Replace 'htmlhelp', 'install' `
-#       -Replace 'shell', 'shell install' |
-#       Set-Content -Path buildall.vc.bat
-#       Get-Content -Path buildall.vc.bat
-
-#       cd '${{github.workspace}}\3rdparty\tcl-vc17-64'
-#       tree . /f /a
-#       cp "./tclsh*.exe" ./tclsh.exe
-#       tree . /f /a
-        
-#        echo '### nmake install ###'
-#        nmake -nologo -f makefile.vc install
-
-#       echo '### run buildall.vc.bat ###'
-#       ./buildall.vc.bat
-#       tree C:\Users\runneradmin\tcl\win\Release_AMD64_VC1934
-#       nmake -nologo -f makefile.vc install 
-#       tree '${{github.workspace}}\3rdparty\tcl-vc17-64'
-#       tree C:\Tcl /f /a
-#       echo '### nmake clean ###'
-#       nmake -nologo -f makefile.vc clean OPTS=none
-#       set INSTALLDIR="${{github.workspace}}/3rdparty/tcl-vc17-64"
+#       nmake -nologo -f makefile.vc release install
 
 #        echo '### modified makefile.vc ###'
 #        (Get-Content -path makefile.vc) -Replace '-MD', '-MT' | Set-Content -Path makefile.vc
