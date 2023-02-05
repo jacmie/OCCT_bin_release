@@ -75,9 +75,11 @@ runs:
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
         echo '### install ###'
-        cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release'
+        cp -Path C:\Tcl -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release' -Recurse
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
+
+#       cp -Path './freetype/include'                       -Destination '${{github.workspace}}/3rdparty/freetype-vc17-x64-release' -Recurse
 
 #       echo '### modified buildall.vc.bat ###'
 #       $buildallpath = (get-command VsDevCmd.bat).Path
