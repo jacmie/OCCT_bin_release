@@ -74,9 +74,9 @@ runs:
         echo '### run nmake ###'
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
-        echo '### install ###'
-        cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' -Recurse
-        tree '${{github.workspace}}/3rdparty' /f /a
+#       echo '### install ###'
+#       cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' -Recurse
+#       tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
 
 #       echo '### modified buildall.vc.bat ###'

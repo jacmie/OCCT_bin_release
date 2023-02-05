@@ -67,10 +67,6 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
-        #with:
-          #fetch-depth: 0 # get all tags (needed to get git log) may be time consuming 
-          #ref: master
-          ##ref: ${{ github.event.pull_request.head.ref }}
 
       # MacOS
       - name: Set MacOS
@@ -101,22 +97,12 @@ jobs:
           arch: x86_64
           vsversion: 17.0
 
-#     # 3rd Party 
-#     - name: Set catalogues structure for 3rd Party dependencies (Windows VS only) 
-#       if: matrix.cmake_generator == 'Visual Studio 17 2022'
-#       run: |
-#         pwd
-#         mkdir '${{github.workspace}}/dep/include'
-#         mkdir '${{github.workspace}}/dep/lib'
-#         mkdir '${{github.workspace}}/dep/bin'
-#         tree  '${{github.workspace}}/dep' /f /a
-
       # Freetype
-#     - name: Freetype - Dowload & Build
-#       uses: ./.github/actions/freetype
-#       with:        
-#         release: 2.12.1
-#         cmake_generator: ${{ matrix.cmake_generator }}
+      - name: Freetype - Dowload & Build
+        uses: ./.github/actions/freetype
+        with:        
+          release: 2.12.1
+          cmake_generator: ${{ matrix.cmake_generator }}
 
       # Tcl
       - name: Tcl - Dowload & Build
@@ -160,32 +146,27 @@ jobs:
 #         Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\lib'
 #       shell: pwsh
 
-#     - name: 3rd Party - VS17
-#       if: matrix.cmake_generator == 'Visual Studio 17 2022'
-#       run: tree '${{github.workspace}}/dep' /f /a
-#       shell: pwsh 
+      # Build Release
+      - name: Build Release
+        uses: ./.github/actions/generic_cmake_build
+        with:        
+          shell_type:       ${{ matrix.shell_type }}
+          build_type:       Release
+          dependency:       ${{ matrix.dependency }}
+          cmake_generator:  ${{ matrix.cmake_generator }}
+          parallel:         8
+          tests_flag:       false
 
-#     # Build Release
-#     - name: Build Release
-#       uses: ./.github/actions/generic_cmake_build
-#       with:        
-#         shell_type:       ${{ matrix.shell_type }}
-#         build_type:       Release
-#         dependency:       ${{ matrix.dependency }}
-#         cmake_generator:  ${{ matrix.cmake_generator }}
-#         parallel:         8
-#         tests_flag:       false
-
-#     # Compress Artefacts
-#     - name: Compress Artefacts
-#       uses: ./.github/actions/compress
-#       with:        
-#         shell_type:   ${{ matrix.shell_type }}
-#         release_dir:  ${{ matrix.release_dir }}
-#         bin_dir:      ${{ matrix.bin_dir }}
-#         compress:     ${{ matrix.compress }}
-#         compress_ext: ${{ matrix.compress_ext }}
-#         os:           ${{ matrix.os }}
+      # Compress Artefacts
+      - name: Compress Artefacts
+        uses: ./.github/actions/compress
+        with:        
+          shell_type:   ${{ matrix.shell_type }}
+          release_dir:  ${{ matrix.release_dir }}
+          bin_dir:      ${{ matrix.bin_dir }}
+          compress:     ${{ matrix.compress }}
+          compress_ext: ${{ matrix.compress_ext }}
+          os:           ${{ matrix.os }}
 
 #       shell: bash
 #       run: |
