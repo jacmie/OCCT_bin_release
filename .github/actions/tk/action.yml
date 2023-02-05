@@ -73,9 +73,7 @@ runs:
         (get-command nmake).Path
         nmake -nologo -f makefile.vc release install
         echo '### install ###'
-        cp -Path 'C:/Tcl/include/*' -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/include' -Recurse
-        cp -Path 'C:/Tcl/lib/*'     -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/lib' -Recurse
-        cp -Path 'C:/Tcl/bin/*'     -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-release/bin' -Recurse
+        cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tk-vc17-x64-release' -Recurse
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
         
