@@ -83,6 +83,7 @@ runs:
         -Replace 'shell', 'shell install' |
         Set-Content -Path buildall.vc.bat
         Get-Content -Path buildall.vc.bat
+        ./buildall.vc.bat
         echo '### install ###'
         tree '${{github.workspace}}/3rdparty' /f /a
         tree 'C:\Tcl' /f /a

@@ -112,11 +112,11 @@ jobs:
 #         tree  '${{github.workspace}}/dep' /f /a
 
       # Freetype
-      - name: Freetype - Dowload & Build
-        uses: ./.github/actions/freetype
-        with:        
-          release: 2.12.1
-          cmake_generator: ${{ matrix.cmake_generator }}
+#     - name: Freetype - Dowload & Build
+#       uses: ./.github/actions/freetype
+#       with:        
+#         release: 2.12.1
+#         cmake_generator: ${{ matrix.cmake_generator }}
 
       # Tcl
       - name: Tcl - Dowload & Build
