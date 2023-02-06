@@ -41,7 +41,6 @@ runs:
         echo '### download ###'
         cd ~
         wget https://prdownloads.sourceforge.net/tcl/tk8.6.13-src.tar.gz
-        ls
         tar xf tk8.6.13-src.tar.gz
         echo '### configure ###'
         cd tk8.6.13/win/
