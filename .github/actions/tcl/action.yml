@@ -46,10 +46,15 @@ runs:
         tar xf *.tar.gz
         ls
         echo '### configure ###'
-        cd tcl/win/
+        cd tcl8.6.13
+        ls
+        cd ..
+        cd tcl8.6.13/win/
+        ls
         ./configure --enable-64bit
         echo '### compile ###'
         make -j 8
+        tree .
         echo '### install ###'
         make install
         echo '### include dir ###'
@@ -59,6 +64,11 @@ runs:
         ls -c -ltd -- *tcl*
         echo '### lib dir ###'
         cd /mingw64/lib/
+        pwd
+        ls -d */
+        ls -c -ltd -- *tcl*
+        echo '### bin dir ###'
+        cd /mingw64/bin/
         pwd
         ls -d */
         ls -c -ltd -- *tcl*
