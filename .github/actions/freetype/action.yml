@@ -71,10 +71,9 @@ runs:
         pwd
         ls -d */
         ls -c -ltd -- *freetype*
-        locate libfreetype
-#       tree 'D:/a/_temp/msys64/mingw64/bin' /f /a
-#       cd 'D:/a/_temp/msys64/mingw64/bin'
-#       cp ./libfreetype-6.dll ./libfreetype.dll 
+        tree 'D:/a/_temp/msys64/mingw64' /f /a
+        cd 'D:/a/_temp/msys64/mingw64/bin'
+        cp ./libfreetype-6.dll ./libfreetype.dll 
       shell: msys2 {0}
 
     - name: FreeType - VS17 - Dowload

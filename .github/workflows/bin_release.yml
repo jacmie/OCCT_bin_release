@@ -84,7 +84,6 @@ jobs:
          #update:       true
           platform-check-severity: fatal
           install: >-
-            findutils
             tree
             git
             base-devel
