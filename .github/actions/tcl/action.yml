@@ -42,7 +42,9 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        git clone https://github.com/tcltk/tcl.git
+        wget https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz
+        tar xf *.tar.gz
+        ls
         echo '### configure ###'
         cd tcl/win/
         ./configure --enable-64bit
@@ -62,6 +64,9 @@ runs:
         ls -c -ltd -- *tcl*
       shell: msys2 {0}
 
+#       mv ./freetype-${{inputs.release}} ./freetype
+#       git clone https://github.com/tcltk/tcl.git
+       
     - name: Tcl - VS17
       if: inputs.cmake_generator == 'Visual Studio 17 2022'
       run: |
