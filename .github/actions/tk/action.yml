@@ -40,9 +40,10 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        git clone https://github.com/tcltk/tk.git
+        wget https://prdownloads.sourceforge.net/tcl/tk8.6.13-src.tar.gz
+        tar xf *.tar.gz
         echo '### configure ###'
-        cd tk/win/
+        cd tk8.6.13/win/
         ./configure --enable-64bit --disable-zipfs
         echo '### compile ###'
         make -j 8
@@ -58,7 +59,12 @@ runs:
         pwd
         ls -d */
         ls -c -ltd -- *tk*
+        echo '### bin dir ###'
+        cd /mingw64/bin/
+        pwd
+        ls -c -ltd -- *tcl*
       shell: msys2 {0}
+#      git clone https://github.com/tcltk/tk.git
 
     - name: Tk - VS17 - Build
       if: inputs.cmake_generator == 'Visual Studio 17 2022'

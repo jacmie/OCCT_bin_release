@@ -44,17 +44,11 @@ runs:
         cd ~
         wget https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz
         tar xf *.tar.gz
-        ls
         echo '### configure ###'
-        cd tcl8.6.13
-        ls
-        cd ..
         cd tcl8.6.13/win/
-        ls
         ./configure --enable-64bit
         echo '### compile ###'
         make -j 8
-        tree .
         echo '### install ###'
         make install
         echo '### include dir ###'
@@ -70,8 +64,8 @@ runs:
         echo '### bin dir ###'
         cd /mingw64/bin/
         pwd
-        ls -d */
         ls -c -ltd -- *tcl*
+#       ls -d */
       shell: msys2 {0}
 
 #       mv ./freetype-${{inputs.release}} ./freetype
