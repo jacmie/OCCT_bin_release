@@ -49,9 +49,6 @@ runs:
     - name: Configure CMake - MinGW
       if: inputs.cmake_generator == 'MinGW Makefiles'
       run: |
-        tree 'D:/a/_temp/msys64/mingw64/bin' /f /a
-        cd 'D:/a/_temp/msys64/mingw64/bin'
-        cp ./libfreetype-6.dll ./libfreetype.dll 
         cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
         -D3RDPARTY_FREETYPE_DIR='D:/a/_temp/msys64/mingw64' `
         -D3RDPARTY_TCL_INCLUDE_DIR='D:/a/_temp/msys64/mingw64/include' -D3RDPARTY_TK_INCLUDE_DIR='D:/a/_temp/msys64/mingw64/include' `
