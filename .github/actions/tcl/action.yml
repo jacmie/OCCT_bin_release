@@ -43,7 +43,7 @@ runs:
         echo '### download ###'
         cd ~
         wget https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz
-        tar xf *.tar.gz
+        tar xf tcl8.6.13-src.tar.gz
         echo '### configure ###'
         cd tcl8.6.13/win/
         ./configure --enable-64bit
