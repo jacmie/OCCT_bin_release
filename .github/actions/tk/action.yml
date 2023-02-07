@@ -49,6 +49,8 @@ runs:
         make -j 8
         echo '### install ###'
         make install
+        cd '/mingw64/lib'
+        cp ./libtk86.dll.a ./libtk86.a 
         echo '### include dir ###'
         cd /mingw64/include/
         pwd
