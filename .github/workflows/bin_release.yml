@@ -81,7 +81,7 @@ jobs:
           msystem:      MINGW64 # (default), Other - MSYS, UCRT64, CLANG64
           path-type:    minimal # (default), Other - strict, inherit
           release:      true
-         #update:       true
+          update:       true
           platform-check-severity: fatal
           install: >-
             tree
