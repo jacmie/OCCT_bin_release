@@ -79,7 +79,9 @@ runs:
         echo '### download ###'
         cd ~
         Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz' -outfile './tcl8.6.13-src.tar.gz'
-        tar xf tcl8.6.13-src.tar.gz
+        echo '### unzip ###'
+        7z x './tcl8.6.13-src.tar.xz' 
+        7z x './tcl8.6.13-src.tar'
         cd tcl8.6.13/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
