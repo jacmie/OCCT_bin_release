@@ -73,8 +73,9 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        git clone https://github.com/tcltk/tk.git
-        cd tk/win/
+        wget https://prdownloads.sourceforge.net/tcl/tk8.6.13-src.tar.gz
+        tar xf tk8.6.13-src.tar.gz
+        cd tk8.6.13/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         echo '### run nmake ###'
@@ -85,6 +86,8 @@ runs:
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
         
+#       git clone https://github.com/tcltk/tk.git
+       
 #       echo '### modified buildall.vc.bat ###'
 #       $buildallpath = (get-command VsDevCmd.bat).Path
 #       echo $buildallpath

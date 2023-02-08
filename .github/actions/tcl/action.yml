@@ -78,8 +78,9 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        git clone https://github.com/tcltk/tcl.git
-        cd tcl/win/
+        wget https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz
+        tar xf tcl8.6.13-src.tar.gz
+        cd tcl8.6.13/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         echo '### run nmake ###'
@@ -89,6 +90,8 @@ runs:
 #       cp -Path 'C:/Tcl' -Destination '${{github.workspace}}/3rdparty/tcltk-vc17-x64-release' -Recurse
 #       tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
+
+#       git clone https://github.com/tcltk/tcl.git
 
 #       echo '### modified buildall.vc.bat ###'
 #       $buildallpath = (get-command VsDevCmd.bat).Path
