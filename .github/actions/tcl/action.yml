@@ -78,7 +78,7 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        wget https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz
+        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz' -outfile './tcl8.6.13-src.tar.gz'
         tar xf tcl8.6.13-src.tar.gz
         cd tcl8.6.13/win/
         echo '### modified rules.vc ###'
