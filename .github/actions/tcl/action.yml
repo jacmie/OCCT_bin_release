@@ -78,14 +78,12 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz' -outfile './tcl8.6.13-src.tar.gz'
+        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tcl8613-src.zip' -outfile './tcl8613-src.zip'
         ls
         echo '### unzip ###'
-        7z x './tcl8.6.13-src.tar.gz' 
+        7z x './tcl8613-src.zip'
         ls
-        7z x './tcl8.6.13-src.tar'
-        ls
-        cd tcl8.6.13/win/
+        cd tcl8613/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         echo '### run nmake ###'

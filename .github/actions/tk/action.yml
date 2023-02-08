@@ -73,10 +73,9 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tk8.6.13-src.tar.gz' -outfile './tk8.6.13-src.tar.gz'
-        7z x './tk8.6.13-src.tar.gz' 
-        7z x './tk8.6.13-src.tar'
-        cd tk8.6.13/win/
+        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tk8613-src.zip' -outfile './tk8613-src.tar.gz'
+        7z x './tk8613-src.zip'
+        cd tk8613/win/
         echo '### modified rules.vc ###'
         (Get-Content -Path rules.vc) -Replace 'tsgx', 'sgx' | Set-Content -Path rules.vc
         echo '### run nmake ###'
