@@ -78,7 +78,8 @@ runs:
       run: |
         echo '### download ###'
         cd ~
-        Invoke-WebRequest -Uri 'https://downloads.sourceforge.net/project/tcl/Tcl/8.6.13/tcl8613-src.zip?ts=gAAAAABj5pjl7WhMPw1QWwVYzlw0eZ9-GebiFvAfIwm2W6M3K3Kg033k2Y3PpjDXC3sogFOzIGaoCFKaIW5WXZqE5HwS7EkMnA%3D%3D&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ftcl%2Ffiles%2FTcl%2F8.6.13%2Ftcl8613-src.zip%2Fdownload%3Fuse_mirror%3Ddeac-riga' -outfile './tcl8613-src.zip'
+#       git clone https://github.com/tcltk/tcl.git
+#       https://dev.opencascade.org/system/files/occt/3rdparty/tcltk-86-64.zip
         ls
         echo '### unzip ###'
         7z x './tcl8613-src.zip'
@@ -94,8 +95,6 @@ runs:
 #       tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh
 
-#       Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/tcl/tcl8613-src.zip' -outfile './tcl8613-src.zip'
-#       git clone https://github.com/tcltk/tcl.git
 
 #       echo '### modified buildall.vc.bat ###'
 #       $buildallpath = (get-command VsDevCmd.bat).Path

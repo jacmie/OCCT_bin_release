@@ -49,6 +49,13 @@ runs:
     - name: Configure CMake - MinGW
       if: inputs.cmake_generator == 'MinGW Makefiles'
       run: |
+        echo '### download ###'
+        cd '${{github.workspace}}/3rdparty'
+        Invoke-WebRequest -Uri 'https://dev.opencascade.org/system/files/occt/3rdparty/tcltk-86-32.zip' -outfile './tcltk.zip'
+        echo '### unzip ###'
+        7z x 'tcltk.zip'
+        tree '${{github.workspace}}/3rdparty' /f /a
+        echo '### build ###'
         cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
         -DBUILD_DOC_Overview=OFF `
         -D3RDPARTY_FREETYPE_DIR='D:/a/_temp/msys64/mingw64' `
@@ -62,7 +69,7 @@ runs:
       run: |
         echo '### download ###'
         cd '${{github.workspace}}/3rdparty'
-        Invoke-WebRequest -Uri 'https://dev.opencascade.org/system/files/occt/3rdparty/tcltk-86-32.zip' -outfile './tcltk.zip'
+        Invoke-WebRequest -Uri 'https://dev.opencascade.org/system/files/occt/3rdparty/tcltk-86-64.zip' -outfile './tcltk.zip'
         echo '### unzip ###'
         7z x 'tcltk.zip'
         tree '${{github.workspace}}/3rdparty' /f /a
