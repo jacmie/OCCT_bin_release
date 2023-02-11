@@ -51,6 +51,7 @@ runs:
         pwd
         ls
         tree '${{github.workspace}}/build' /f /a
-        echo '${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} ${{github.workspace}}/build/include/* ${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
-        ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{ inputs.compress_ext}} '${{github.workspace}}/build/include/*' '${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
+        echo '${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} ${{github.workspace}}/build/inc/* ${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
+        ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{ inputs.compress_ext}} '${{github.workspace}}/build/inc/*'  
+#       ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{ inputs.compress_ext}} '${{github.workspace}}/build/inc/*' '${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
       shell: pwsh 
