@@ -74,6 +74,7 @@ jobs:
         run: |
           sudo apt install libfreetype6-dev
           sudo apt install tklib
+          locate tcl.h
 
       # MacOS
       - name: Set MacOS
