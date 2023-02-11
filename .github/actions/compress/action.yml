@@ -46,6 +46,7 @@ runs:
       run: |
         cd '${{github.workspace}}/build'
         pwd
-        echo '${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{ inputs.compress_ext}} include ${{inputs.bin_dir}}' 
+        ls
+        echo '${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} ${{github.workspace}}/build/include/* ${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
         ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{ inputs.compress_ext}} '${{github.workspace}}/build/include/*' '${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
       shell: pwsh 
