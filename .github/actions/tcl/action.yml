@@ -76,7 +76,6 @@ runs:
         cd ~
         wget https://prdownloads.sourceforge.net/tcl/tcl8.6.13-src.tar.gz
         tar xf tk8.6.13-src.tar.gz
-#       git clone https://github.com/tcltk/tcl.git
         ls
         echo '### unzip ###'
         7z x './tcl8613-src.zip'
@@ -109,9 +108,6 @@ runs:
 
 #       cp -Path '${{github.workspace}}/3rdparty/tcl-vc17-x64-release/bin/tclsh*.exe' -Destination '${{github.workspace}}/3rdparty/tcl-vc17-x64-release/bin/tclsh.exe'
 #       mv -Path 'C:/Tcl/bin/tclsh*.exe' -Destination 'C:/Tcl/bin/tclsh.exe'
-
-
-
 
 #        echo '### modified makefile.vc ###'
 #        (Get-Content -path makefile.vc) -Replace '-MD', '-MT' | Set-Content -Path makefile.vc
