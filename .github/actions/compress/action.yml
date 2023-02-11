@@ -2,14 +2,6 @@ name: compress
 description: 'Compress resulting file form the build depending on os'
 
 inputs:
-  shell_type:
-    description: 'Shell type'
-    required: true
-    default: 'bash'
-  release_dir:
-    description: 'Build catalogue'
-    required: true
-    default: '/build'
   bin_dir:
     description: 'Binaries catalogue'
     required: true
@@ -34,32 +26,28 @@ runs:
     - name: Linux & MacOS Compress Artefacts
       if: matrix.cmake_generator == 'Unix Makefiles'
       run: |
-          cd '${{ github.workspace }}/build'
-          ls
-          set -x
-          ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} include ${{inputs.bin_dir}} 
+        cd '${{github.workspace}}/build'
+        ls
+        set -x
+        ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} include ${{inputs.bin_dir}} 
       shell: bash
 
     - name: MinGW Compress Artefacts
       if: matrix.cmake_generator == 'MinGW Makefiles'
       run: |
-          cd '${{ github.workspace }}/build'
-          ls
-          Set-PSDebug -Trace 1
-          ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} include ${{inputs.bin_dir}} 
+        cd '${{github.workspace}}/build'
+        ls
+        Set-PSDebug -Trace 1
+        ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} include ${{inputs.bin_dir}} 
       shell: pwsh
 
     - name: VS17 Compress Artefacts
       if: matrix.cmake_generator == 'VS17'
       run: |
-          cd '${{ github.workspace }}/build'
-          pwd
-          ls
-          echo '${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} ${{ github.workspace }}/build/include/ ${{ github.workspace }}/build/win64/' 
-          echo '***'
-          ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} '${{ github.workspace }}/build/include/' '${{ github.workspace }}/build/win64/' 
+        pwd
+        ls
+#       echo '${{inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} ${{ github.workspace }}/build/include/ ${{ github.workspace }}/build/win64/' 
+#       echo '***'
+#       ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} '${{ github.workspace }}/build/include/' '${{ github.workspace }}/build/win64/' 
       shell: pwsh 
-
-          
-
-        
+#       cd '${{github.workspace}}/build'

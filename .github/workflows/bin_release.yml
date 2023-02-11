@@ -172,8 +172,6 @@ jobs:
       - name: Compress Artefacts
         uses: ./.github/actions/compress
         with:        
-          shell_type:   ${{ matrix.shell_type }}
-          release_dir:  ${{ matrix.release_dir }}
           bin_dir:      ${{ matrix.bin_dir }}
           compress:     ${{ matrix.compress }}
           compress_ext: ${{ matrix.compress_ext }}
