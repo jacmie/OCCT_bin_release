@@ -42,12 +42,12 @@ runs:
       shell: pwsh
 
     - name: VS17 Compress Artefacts
-      if: matrix.cmake_generator == 'VS17'
+      if: matrix.cmake_generator == 'Visual Studio 17 2022'
       run: |
+        cd '${{github.workspace}}/build'
         pwd
         ls
-#       echo '${{inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} ${{ github.workspace }}/build/include/ ${{ github.workspace }}/build/win64/' 
-#       echo '***'
-#       ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} '${{ github.workspace }}/build/include/' '${{ github.workspace }}/build/win64/' 
+        echo '${{inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} ${{ github.workspace }}/build/include/ ${{ github.workspace }}/build/win64/' 
+        echo '***'
+        ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} '${{ github.workspace }}/build/include/' '${{ github.workspace }}/build/win64/' 
       shell: pwsh 
-#       cd '${{github.workspace}}/build'
