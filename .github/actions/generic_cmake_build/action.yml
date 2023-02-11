@@ -38,8 +38,7 @@ runs:
     - name: Configure CMake - Unix
       if: inputs.cmake_generator == 'Unix Makefiles'
       run: |
-        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
-        -D3RDPARTY_DIR='/usr/local'
+        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} -D3RDPARTY_DIR='/usr/local'
 #       -D3RDPARTY_FREETYPE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release' `
 #       -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/include' `
 #       -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/lib' `
