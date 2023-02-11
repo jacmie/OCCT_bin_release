@@ -21,25 +21,25 @@ jobs:
       matrix:
         include:
 
-#         - os:                 ubuntu-latest
-#           shell_type:         bash
-#           cmake_generator:    "Unix Makefiles"
-#           release_dir:        "/build"
-#           dependency:         "/usr/local"
-#           ext:                ""
-#           bin_dir:            "lin64"
-#           compress:           "tar -czvf"
-#           compress_ext:       "UnixMake.tar.gz"
+          - os:                 ubuntu-latest
+            shell_type:         bash
+            cmake_generator:    "Unix Makefiles"
+            release_dir:        "/build"
+            dependency:         "/usr/local"
+            ext:                ""
+            bin_dir:            "lin64"
+            compress:           "tar -czvf"
+            compress_ext:       "UnixMake.tar.gz"
 
-#         - os:                 macos-latest
-#           shell_type:         bash
-#           cmake_generator:    "Unix Makefiles"
-#           release_dir:        "/build"
-#           dependency:         "/usr/local"
-#           ext:                ""
-#           bin_dir:            "macos64"
-#           compress:           "tar -czvf"
-#           compress_ext:       "UnixMake.tar.gz"
+          - os:                 macos-latest
+            shell_type:         bash
+            cmake_generator:    "Unix Makefiles"
+            release_dir:        "/build"
+            dependency:         "/usr/local"
+            ext:                ""
+            bin_dir:            "macos64"
+            compress:           "tar -czvf"
+            compress_ext:       "UnixMake.tar.gz"
 
 #         - os:                 windows-latest
 #           shell_type:         pwsh
@@ -54,7 +54,7 @@ jobs:
           - os:                 windows-latest
             shell_type:         pwsh
             cmake_generator:    "Visual Studio 17 2022"  
-            release_dir:        "/build/Release"
+            release_dir:        "/build"
             dependency:         "/dep"
             ext:                ".exe"
             bin_dir:            "win64"
@@ -104,17 +104,19 @@ jobs:
           release: 2.12.1
           cmake_generator: ${{ matrix.cmake_generator }}
 
-#     # Tcl
-#     - name: Tcl - Dowload & Build
-#       uses: ./.github/actions/tcl
-#       with:        
-#         cmake_generator: ${{ matrix.cmake_generator }}
+      # Tcl
+      - name: Tcl - Dowload & Build
+        if: matrix.cmake_generator == 'Unix Makefiles'
+        uses: ./.github/actions/tcl
+        with:        
+          cmake_generator: ${{ matrix.cmake_generator }}
 
-#     # Tk
-#     - name: Tk - Dowload & Build
-#       uses: ./.github/actions/tk
-#       with:        
-#         cmake_generator: ${{ matrix.cmake_generator }}
+      # Tk
+      - name: Tk - Dowload & Build
+        if: matrix.cmake_generator == 'Unix Makefiles'
+        uses: ./.github/actions/tk
+        with:        
+          cmake_generator: ${{ matrix.cmake_generator }}
 
       # 3rd Party dependencies
       - name: 3rd Party - Unix
@@ -181,6 +183,6 @@ jobs:
           allowUpdates: true
           name: ${{ env.GITHUB_REF_NAME }}
           tag: ${{ env.GITHUB_REF_NAME }}
-          artifacts: '${{github.workspace}}${{ matrix.release_dir }}/build_${{ matrix.os }}_${{ matrix.compress_ext}}'
+          artifacts: '${{github.workspace}}/build/OCCTbuild_${{ matrix.os }}_${{ matrix.compress_ext}}'
           token: ${{ secrets.GITHUB_TOKEN }}
 

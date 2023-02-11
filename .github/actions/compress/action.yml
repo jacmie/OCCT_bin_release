@@ -34,33 +34,36 @@ runs:
     - name: Linux & MacOS Compress Artefacts
       if: matrix.cmake_generator == 'Unix Makefiles'
       run: |
-          cd '${{ github.workspace }}${{ inputs.release_dir }}'
+          cd '${{ github.workspace }}/build'
           ls
           set -x
           ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} /include/ ${{ inputs.bin_dir }} \
           /usr/local/include/freetype2/ /usr/local/include/*tcl* /usr/local/include/*tk* \
           /usr/local/lib/*freetype* /usr/local/lib/*tcl*  /usr/local/lib/*tk*
-      shell: ${{ inputs.shell_type }}
+      shell: bash
 
     - name: MinGW Compress Artefacts
       if: matrix.cmake_generator == 'MinGW Makefiles'
       run: |
-          cd '${{ github.workspace }}${{ inputs.release_dir }}'
+          cd '${{ github.workspace }}/build'
           ls
           Set-PSDebug -Trace 1
           ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} /include/ ${{ inputs.bin_dir }} `
           'D:\a\_temp\msys64\mingw64\include\freetype2\' `
           'D:\a\_temp\msys64\mingw64\lib\'
-      shell: ${{ inputs.shell_type }}
+      shell: pwsh
 
     - name: VS17 Compress Artefacts
       if: matrix.cmake_generator == 'VS17'
       run: |
-          cd '${{ github.workspace }}${{ inputs.release_dir }}'
+          cd '${{ github.workspace }}/build'
+          pwd
           ls
+          echo '${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} ${{ github.workspace }}/build/include/ ${{ github.workspace }}/build/win64/' 
+          echo '***'
           Set-PSDebug -Trace 1
-          ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} /include/ ${{ inputs.bin_dir }} '${{github.workspace}}/dep/'
-      shell: ${{ inputs.shell_type }}
+          ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} '${{ github.workspace }}/build/include/' '${{ github.workspace }}/build/win64/' 
+      shell: pwsh 
 
           
 
