@@ -13,7 +13,7 @@ inputs:
   bin_dir:
     description: 'Binaries catalogue'
     required: true
-    default: '/lin64/'
+    default: 'lin64/'
   compress:
     description: 'Compress command'
     required: true
@@ -37,9 +37,7 @@ runs:
           cd '${{ github.workspace }}/build'
           ls
           set -x
-          ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} /include/ ${{ inputs.bin_dir }} \
-          /usr/local/include/freetype2/ /usr/local/include/*tcl* /usr/local/include/*tk* \
-          /usr/local/lib/*freetype* /usr/local/lib/*tcl*  /usr/local/lib/*tk*
+          ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} include ${{inputs.bin_dir}} 
       shell: bash
 
     - name: MinGW Compress Artefacts
@@ -48,9 +46,7 @@ runs:
           cd '${{ github.workspace }}/build'
           ls
           Set-PSDebug -Trace 1
-          ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} /include/ ${{ inputs.bin_dir }} `
-          'D:\a\_temp\msys64\mingw64\include\freetype2\' `
-          'D:\a\_temp\msys64\mingw64\lib\'
+          ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} include ${{inputs.bin_dir}} 
       shell: pwsh
 
     - name: VS17 Compress Artefacts
