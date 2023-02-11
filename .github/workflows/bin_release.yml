@@ -71,7 +71,9 @@ jobs:
       # Linux
       - name: Set Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run:  sudo apt-get install tklib
+        run: |
+          sudo apt install libfreetype6-dev
+          sudo apt install tklib
 
       # MacOS
       - name: Set MacOS
