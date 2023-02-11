@@ -53,5 +53,4 @@ runs:
         tree '${{github.workspace}}/build' /f /a
         echo '${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} ${{github.workspace}}/build/inc/* ${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
         ${{inputs.compress}} '${{github.workspace}}/build/OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}}' '${{github.workspace}}/build/inc' '${{github.workspace}}/build/${{inputs.bin_dir}}' 
-#       ${{inputs.compress}}  ${{github.workspace}}/build/OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} '${{github.workspace}}/build/inc/*' '${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
       shell: pwsh 

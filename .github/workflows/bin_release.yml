@@ -25,7 +25,6 @@ jobs:
             shell_type:         bash
             cmake_generator:    "Unix Makefiles"
             release_dir:        "/build"
-            dependency:         "/usr/local"
             ext:                ""
             bin_dir:            "lin64"
             compress:           "tar -czvf"
@@ -35,7 +34,6 @@ jobs:
             shell_type:         bash
             cmake_generator:    "Unix Makefiles"
             release_dir:        "/build"
-            dependency:         "/usr/local"
             ext:                ""
             bin_dir:            "mac64"
             compress:           "tar -czvf"
@@ -45,7 +43,6 @@ jobs:
 #           shell_type:         pwsh
 #           cmake_generator:    "MinGW Makefiles"
 #           release_dir:        "/build"
-#           dependency:         "D:/a/_temp/msys64/mingw64"
 #           ext:                ".exe"
 #           bin_dir:            "win64"
 #           compress:           "7z a"
@@ -55,7 +52,6 @@ jobs:
             shell_type:         pwsh
             cmake_generator:    "Visual Studio 17 2022"  
             release_dir:        "/build"
-            dependency:         "/dep"
             ext:                ".exe"
             bin_dir:            "win64"
             compress:           "7z a "
@@ -74,7 +70,6 @@ jobs:
         run: |
           sudo apt install mesa-common-dev
           sudo apt install libfreetype6-dev
-#         sudo apt install tk-dev
 
       # MacOS
       - name: Set MacOS
@@ -113,57 +108,12 @@ jobs:
           release: 2.12.1
           cmake_generator: ${{ matrix.cmake_generator }}
 
-#     # Tcl
-#     - name: Tcl - Dowload & Build
-#       if: matrix.cmake_generator == 'Unix Makefiles'
-#       uses: ./.github/actions/tcl
-#       with:        
-#         cmake_generator: ${{ matrix.cmake_generator }}
-
-#     # Tk
-#     - name: Tk - Dowload & Build
-#       if: matrix.cmake_generator == 'Unix Makefiles'
-#       uses: ./.github/actions/tk
-#       with:        
-#         cmake_generator: ${{ matrix.cmake_generator }}
-
-#     # 3rd Party dependencies
-#     - name: 3rd Party - Unix
-#       if: matrix.cmake_generator == 'Unix Makefiles'
-#       run: |
-#         echo '### include dir ###'
-#         cd /usr/local/include/freetype2
-#         pwd
-#         ls -d */
-#         ls -c -ltd -- *ft*
-#         cd /usr/local/include
-#         pwd
-#         ls -d */
-#         ls -c -ltd -- *tcl*
-#         ls -c -ltd -- *tk*
-#         echo '### lib dir ###'
-#         cd /usr/local/lib
-#         pwd
-#         ls -d */
-#         ls -c -ltd -- *freetype*
-#         ls -c -ltd -- *tcl*
-#         ls -c -ltd -- *tk*
-#       shell: bash
-
-#     - name: 3rd Party - MinGW
-#       if: matrix.cmake_generator == 'MinGW Makefiles'
-#       run: |
-#         Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\include\freetype2'
-#         Get-ChildItem -Path 'D:\a\_temp\msys64\mingw64\lib'
-#       shell: pwsh
-
       # Build Release
       - name: Build Release
         uses: ./.github/actions/generic_cmake_build
         with:        
           shell_type:       ${{ matrix.shell_type }}
           build_type:       Release
-          dependency:       ${{ matrix.dependency }}
           cmake_generator:  ${{ matrix.cmake_generator }}
           parallel:         8
           tests_flag:       false
@@ -176,12 +126,6 @@ jobs:
           compress:     ${{ matrix.compress }}
           compress_ext: ${{ matrix.compress_ext }}
           os:           ${{ matrix.os }}
-
-#       shell: bash
-#       run: |
-#         cd '${{github.workspace}}${{ matrix.release_dir }}'
-#         ls
-#         ${{ matrix.compress}} build_${{ matrix.os }}_${{ matrix.compress_ext}} HelloCMake${{ matrix.ext }}
   
       # Create Github release with release note from file and binary asset attached
       - name: Deploy Release

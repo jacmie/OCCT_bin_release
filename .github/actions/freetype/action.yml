@@ -99,22 +99,3 @@ runs:
         tree '${{github.workspace}}/3rdparty' /f /a
       shell: pwsh 
         
-#     run: |
-#       echo '### download ###'
-#       cd ~
-#       git clone https://github.com/ubawurinna/freetype-windows-binaries.git ./freetype
-#       echo '### install ###'
-#       tree 'C:\Users\runneradmin\freetype' /f /a
-#       cp './freetype/include/*'                                        '${{github.workspace}}/dep/include/'
-#       cp './freetype/release static/vs2015-2022/win64/freetype.lib'    '${{github.workspace}}/dep/lib/'
-#       cp './freetype/release dll/win64/*'                              '${{github.workspace}}/dep/lib/'
-#       tree '${{github.workspace}}/dep' /f /a
-#     shell: pwsh 
-
-#      run: |
-#        cd ~    
-#        Invoke-WebRequest -Uri "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.xz" -outfile "./freetype-2.12.1.tar.xz"
-#        7z x "./freetype-2.12.1.tar.xz" -o"./freetype-2.12.1.tar" -y 
-#        7z x "./freetype-2.12.1.tar" 
-#      shell: pwsh 
-      
