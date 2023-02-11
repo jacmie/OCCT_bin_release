@@ -104,6 +104,7 @@ jobs:
 
       # Freetype
       - name: Freetype - Dowload & Build
+        if: matrix.cmake_generator == 'Visual Studio 17 2022'
         uses: ./.github/actions/freetype
         with:        
           release: 2.12.1
