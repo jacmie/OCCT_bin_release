@@ -86,9 +86,9 @@ runs:
 #       -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/bin' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/bin' 
       shell: ${{ inputs.shell_type }}
 
-#   - name: Build
-#     run: cmake --build ${{inputs.project_dir}}/build -j ${{ inputs.parallel }} --config ${{ inputs.build_type }}
-#     shell: ${{ inputs.shell_type }}
+    - name: Build
+      run: cmake --build ${{inputs.project_dir}}/build -j ${{ inputs.parallel }} --config ${{ inputs.build_type }}
+      shell: ${{ inputs.shell_type }}
 
 #   - name: Test
 #     if: ${{ inputs.tests_flag == 'true' }}
