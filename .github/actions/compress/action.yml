@@ -57,7 +57,6 @@ runs:
           ls
           echo '${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} ${{ github.workspace }}/build/include/ ${{ github.workspace }}/build/win64/' 
           echo '***'
-          Set-PSDebug -Trace 1
           ${{ inputs.compress}} OCCTbuild_${{ inputs.os }}_${{ inputs.compress_ext}} '${{ github.workspace }}/build/include/' '${{ github.workspace }}/build/win64/' 
       shell: pwsh 
 
