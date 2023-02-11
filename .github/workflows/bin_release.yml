@@ -73,7 +73,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt install libfreetype6-dev
-          sudo apt install tk-dev
+#         sudo apt install tk-dev
 
       # MacOS
       - name: Set MacOS

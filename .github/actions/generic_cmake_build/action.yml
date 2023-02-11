@@ -38,7 +38,8 @@ runs:
     - name: Configure CMake - Unix
       if: inputs.cmake_generator == 'Unix Makefiles'
       run: |
-        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }}
+        cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} \
+        -DBUILD_DOC_Overview=OFF -DBUILD_MODULE_Draw=OFF
 #       -D3RDPARTY_FREETYPE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release' `
 #       -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/include' `
 #       -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-32/lib' `
@@ -57,11 +58,11 @@ runs:
         tree '${{github.workspace}}/3rdparty' /f /a
         echo '### build ###'
         cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
-        -DBUILD_DOC_Overview=OFF `
+        -DBUILD_DOC_Overview=OFF -DBUILD_MODULE_Draw=OFF`
         -D3RDPARTY_FREETYPE_DIR='D:/a/_temp/msys64/mingw64' `
-        -D3RDPARTY_TCL_INCLUDE_DIR='D:/a/_temp/msys64/mingw64/include' -D3RDPARTY_TK_INCLUDE_DIR='D:/a/_temp/msys64/mingw64/include' `
-        -D3RDPARTY_TCL_LIBRARY_DIR='D:/a/_temp/msys64/mingw64/lib' -D3RDPARTY_TK_LIBRARY_DIR='D:/a/_temp/msys64/mingw64/lib' `
-        -D3RDPARTY_TCL_DLL_DIR='D:/a/_temp/msys64/mingw64/bin' -D3RDPARTY_TK_DLL_DIR='D:/a/_temp/msys64/mingw64/bin' 
+#       -D3RDPARTY_TCL_INCLUDE_DIR='D:/a/_temp/msys64/mingw64/include' -D3RDPARTY_TK_INCLUDE_DIR='D:/a/_temp/msys64/mingw64/include' `
+#       -D3RDPARTY_TCL_LIBRARY_DIR='D:/a/_temp/msys64/mingw64/lib' -D3RDPARTY_TK_LIBRARY_DIR='D:/a/_temp/msys64/mingw64/lib' `
+#       -D3RDPARTY_TCL_DLL_DIR='D:/a/_temp/msys64/mingw64/bin' -D3RDPARTY_TK_DLL_DIR='D:/a/_temp/msys64/mingw64/bin' 
       shell: ${{ inputs.shell_type }}
 
     - name: Configure CMake - VS17
@@ -78,10 +79,11 @@ runs:
         cd ${{inputs.project_dir}}
         pwd
         cmake -G "${{ inputs.cmake_generator }}" -B ${{inputs.project_dir}}/build -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} `
+        -DBUILD_DOC_Overview=OFF -DBUILD_MODULE_Draw=OFF`
         -D3RDPARTY_FREETYPE_DIR='${{github.workspace}}/3rdparty/freetype-vc17-x64-release' `
-        -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/include' `
-        -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/lib' `
-        -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/bin' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/bin' 
+#       -D3RDPARTY_TCL_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/include' -D3RDPARTY_TK_INCLUDE_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/include' `
+#       -D3RDPARTY_TCL_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/lib' -D3RDPARTY_TK_LIBRARY_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/lib' `
+#       -D3RDPARTY_TCL_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/bin' -D3RDPARTY_TK_DLL_DIR='${{github.workspace}}/3rdparty/tcltk-86-64/bin' 
       shell: ${{ inputs.shell_type }}
 
     - name: Build
