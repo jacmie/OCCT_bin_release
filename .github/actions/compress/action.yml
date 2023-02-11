@@ -47,6 +47,10 @@ runs:
         cd '${{github.workspace}}/build'
         pwd
         ls
+        cd '${{github.workspace}}/build/inc'
+        pwd
+        ls
+        tree '${{github.workspace}}/build' /f /a
         echo '${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{inputs.compress_ext}} ${{github.workspace}}/build/include/* ${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
         ${{inputs.compress}} OCCTbuild_${{inputs.os}}_${{ inputs.compress_ext}} '${{github.workspace}}/build/include/*' '${{github.workspace}}/build/${{inputs.bin_dir}}/*' 
       shell: pwsh 
