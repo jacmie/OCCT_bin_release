@@ -58,7 +58,7 @@ jobs:
             dependency:         "/dep"
             ext:                ".exe"
             bin_dir:            "win64"
-            compress:           "7z a -r"
+            compress:           "7z a -t7z -r"
             compress_ext:       "VS17.zip"
 
     permissions:
